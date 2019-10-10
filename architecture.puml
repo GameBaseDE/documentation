@@ -1,0 +1,40 @@
+@startuml
+
+package "Application Server" as ApplicationServer {
+    [Web Application] as WebApp
+    [Management] as Mgt
+    WebApp - Mgt
+    database "Container Registry" as ContainerRegistry
+    database "Persistent Storage" as PersistentStorage {
+        folder "Container #n Volume" as ContainerVolume {
+            [Game Server Files]
+        }
+    }
+}
+
+package "Container Cluster #n" as ContainerCluster  {
+    package "Docker Orchestration Host" {
+        [Docker Orchestration] as OrchHost
+    }
+
+    package "Container Host #n" as ContainerHost {
+        package "Container #n" as Container {
+            [Statistics and Reporting] as StatsAnReport
+            [Game Server] as GameServer
+        }
+    }
+
+    OrchHost - Container : 1..*
+}
+
+Mgt --> OrchHost
+'Container --> PersistentStorage
+OrchHost --> ContainerRegistry
+
+'Investigate why "1" *-- "1" does not work
+'Container "1" *-- "1" ContainerVolume
+Container *-- ContainerVolume : has one
+
+ApplicationServer *-- ContainerCluster : many
+
+@enduml
