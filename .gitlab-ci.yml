@@ -4,7 +4,7 @@
 # possible alternative: https://github.com/natlownes/docker-latex
 image: blang/latex
 
-build:
+pages:
   script:
     - cd requirements
     - latexmk -pdf
