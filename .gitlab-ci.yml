@@ -10,4 +10,4 @@ build:
     - latexmk -pdf
   artifacts:
     paths:
-      - "*.pdf"
+      - "requirements/*.pdf"
