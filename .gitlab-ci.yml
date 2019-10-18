@@ -15,7 +15,8 @@ compile-pdf:
 pages:
   stage: deploy
   script:
-    - apt install tree
+    - apt update
+    - apt install tree -y
     - mkdir public
     - cp requirements/*.pdf public
     - cd public
