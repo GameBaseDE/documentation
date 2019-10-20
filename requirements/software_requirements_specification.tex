@@ -129,7 +129,7 @@ The user interface exposes several highly abstracted options for investigating a
 \end{itemize}
 }
 
-\section{Usability}
+\section{{\color{magenta} Usability}}
 % [This section should include all of those requirements that affect usability. For example,
 % \begin{itemize}
 % 	\item specify the required training time for a normal users and a power user to become productive at particular operations
@@ -141,7 +141,7 @@ The user interface exposes several highly abstracted options for investigating a
 We will build the user interface intuitive, so that a new user does not necessarily need an explanation. Even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
 }
 
-\section{Reliability}
+\section{{\color{magenta} Reliability}}
 % [Requirements for reliability of the system should be specified here. Some suggestions follow:
 % \begin{itemize}
 % 	\item Availability—specify the percentage of time available ( xx.xx%), hours of use, maintenance access, degraded mode operations, etc.
@@ -158,22 +158,22 @@ In the following we describe the availability, Mean Time Between Failures and Me
 % \subsection{<Reliability Requirement One>}
 % [The requirement description.]
 
-\subsection{Availability}
+\subsection{{\color{magenta} Availability}}
 {\color{magenta}
 Since we want to provide hosting for our users but also allow them to host the software for themselves or using other providers, we cannot specify this requirement in great detail. Ultimately even the reliability of our own hosting option would be subject to the capabilities of our hosting provider. Due redundancy and other security arrangements, most providers can ensure an uptime of over 99.9\% which equates to approximately 8 hours per year. It is thus reasonable to assume that a sufficiently mature implementation of the software can achieve comparable reliability.
 }
 
-\subsection{Mean Time Between Failures \& Mean Time To Repair}
+\subsection{{\color{magenta} Mean Time Between Failures \& Mean Time To Repair}}
 {\color{magenta}
 If the application fails due an hardware issue, then the mean times are up to our hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, we can revert the code to a previous version that worked fine. This shouldn't take more than one or two hours from the point on we noticed.
 }
 
-\subsection{Accuracy}
+\subsection{{\color{magenta} Accuracy}}
 {\color{magenta}
 The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our controll. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
 }
 
-\subsection{Bug classes}
+\subsection{{\color{magenta} Bug classes}}
 {\color{magenta}
 We classify bugs which might appear in the software into either one of these two categories:
 
@@ -183,7 +183,7 @@ We classify bugs which might appear in the software into either one of these two
 \end{itemize}
 }
 
-\section{Performance}
+\section{{\color{blue} Performance}}
 {\color{blue} [The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
  \begin{itemize}
  	\item response time for a transaction (average, maximum)
@@ -191,7 +191,7 @@ We classify bugs which might appear in the software into either one of these two
  	\item capacity, for example, the number of customers or transactions the system can accommodate
 	\item degradation modes (what is the acceptable mode of operation when the system has been degraded in some manner)
 	\item resource utilization, such as memory, disk, communications, etc.
- \end{itemize}}
+ \end{itemize}]}
 
 {\color{magenta}
 In general, we try to keep to user experience fluent and response times low.
@@ -200,7 +200,7 @@ In general, we try to keep to user experience fluent and response times low.
 % \subsection{<Performance Requirement One>}
 % [The requirement description goes here.]
 
-\section{Supportability}
+\section{{\color{magenta} Supportability}}
 % [This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.]
 {\color{magenta}
 Our frontend, backend and each functionality will be clearly separated and we try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
@@ -215,8 +215,8 @@ Our frontend, backend and each functionality will be clearly separated and we tr
 % \subsection{<Design Constraint One>}
 % [The requirement description goes here.]
  
+\subsection{{\color{magenta} Usage of Software languages and frameworks}}
 {\color{magenta}
-\subsection{Usage of Software languages and frameworks}
 For the clientsided frontend we will use a mix of HTML, CSS, JavaScript and the ReactJS Framework. ReactJS helps building interactive UIs that can be updated dynamically and therefore eliminate the need to refresh the web application. One can also develop single components and can reuse them all over the application. Such a component could be a login form, a profile card or anything else one wants to reuse. We are going to import a React framework called Material-UI that provides a lot of pre-defined components based on the Material Design Specification. The development will take place with the newest version of JavaScript. Fortunately, our development environment is able to compile it to the lower version of JavaScript. Thus, we can use the newest features without having to worry about browser compatibility. Furthermore we will extend ReactJS with Redux. Redux allows us to keep track of state changes in the frontend and is able to notify other components about it.
 
 The application server will be built as a Spring Boot application in Java. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. In our case, a REST Web Service which represents the interface between our front- and backend. As we want to benefit from the newest features of Java 13, the platform this service will be hosted on needs to support Java 13 or higher.
@@ -224,8 +224,8 @@ The application server will be built as a Spring Boot application in Java. Sprin
 The container server in the backend will use the docker api module which is available in Go. Go claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 }
 
+\subsection{{\color{magenta} Development tools}}
 {\color{magenta}
-\subsection{Development tools}
 \begin{itemize}
     \item Git: version control system
     \item GitLab: version control remote server
@@ -237,19 +237,21 @@ The container server in the backend will use the docker api module which is avai
 \end{itemize}
 }
 
-\section{On-line User Documentation and Help System Requirements}
-% [Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.]
+\section{{\color{blue} On-line User Documentation and Help System Requirements}}
+{\color{blue} [Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.]}\\
+
 [to be determined]
 
 \section{Purchased Components}
 % [This section describes any purchased components to be used with the system, any applicable licensing or usage restrictions, and any associated compatibility and interoperability or interface standards.]
 [not applicable]
 
-\section{Interfaces}
-% [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]
+\section{{\color{blue} Interfaces}}
+{\color{blue} [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]}\\
+
 [to be determined]
 
-\subsection{User Interfaces}
+\subsection{{\color{blue} User Interfaces}}
 % [Describe the user interfaces that are to be implemented by the software.]
 [to be determined]
 
@@ -266,16 +268,19 @@ The container server in the backend will use the docker api module which is avai
 % [Describe any communications interfaces to other systems or devices such as local area networks, remote serial devices, etc.]
 [not applicable]
 
-\section{Licensing Requirements}
-% [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]
+\section{{\color{blue} Licensing Requirements}}
+{\color{blue} [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]}\\
+
 [to be determined]
 
-\section{Legal, Copyright, and Other Notices}
-% [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]
+\section{{\color{blue} Legal, Copyright, and Other Notices}}
+{\color{blue} [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]}\\
+
 [to be determined]
 
-\section{Applicable Standards}
-% [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]
+\section{{\color{blue} Applicable Standards}}
+{\color{blue} [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]}\\
+
 [to be determined]
 
 \chapter{Supporting Information}
