@@ -7,7 +7,7 @@ compile-pdf:
   image: blang/latex
   script:
     - cd requirements
-    - latexmk -lualatex -pdf
+    - latexmk -lualatex
   artifacts:
     paths:
       - "requirements/*.pdf"
