@@ -3,7 +3,7 @@
 # since there is no official latex image, use https://github.com/blang/latex-docker
 # possible alternative: https://github.com/natlownes/docker-latex
 before_script:
-  - apt-get update -qq && apt-get install -y -qq tree
+  - apt update -qq && apt install -y -qq tree
 
 compile-pdf:
   stage: build
