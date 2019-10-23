@@ -4,18 +4,24 @@
 # possible alternative: https://github.com/natlownes/docker-latex
 compile-pdf:
   stage: build
-  image: schickling/latex
+  image: blang/latex
   script:
     - cd requirements
-    - lualatex software_requirements_specification.tex
+    - latexmk -lualatex -pdf
   artifacts:
     paths:
       - "requirements/*.pdf"
 
 pages:
+  cache:
+    key: apt-cache
+    paths:
+      - apt-cache/
+
   stage: deploy
   script:
-    - apt update && apt install -y tree
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt update -yq && apt -o dir::cache::archives="$APT_CACHE_DIR" install -y tree
     - mkdir public
     - cp requirements/*.pdf public
     - cd public
