@@ -4,6 +4,8 @@
 \usepackage{xcolor}
 % Spracheinstellungen
 \usepackage[english]{babel}
+% Grafiken einfügen
+\usepackage{graphicx}
 % [H] Platzierung
 \usepackage{float}
 % Tabellen
@@ -29,7 +31,8 @@ Version 1.0
 	\everyrow{\hline}
 	\begin{tabu} to \textwidth {|X[c]|X[c]|X[c]|X[c]|}
 		Date & Version & Description & Author\\
-		<dd/mmm/yy> & <x.x> & <details> & <name>
+		23/10/2019 & 0.1 & Added Use Case Diagram & Norman Gehrsitz\\
+		<dd/mmm/yy> & <x.x> & <details> & <name>\\
 	\end{tabu}
 	\label{tab:rev-hist}
 \end{table}
@@ -62,6 +65,7 @@ This document is designed for internal use only and will outline the development
 The next chapters provide information about our vision based on a use case diagram as well as more detailed software requirements. Additionally, we are going to outline the steps required to comply with legal requirements and technical standards.
 
 \chapter{Overall Description}
+\section{Vision}
 % [This section of the SRS should describe the general factors that affect the product and its requirements.  This section does not state specific requirements.  Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand. Include such items as:
 % \begin{itemize}
 % 	\item product perspective
@@ -74,6 +78,17 @@ The next chapters provide information about our vision based on a use case diagr
 Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don’t have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
 
 With GameBase, we want to make your game server deployment life way easier. Using Docker – a state-of-the-art virtualisation technology – servers can be set up through templates on a website and ready to be deployed with just one click. This also makes sure that every game server is isolated from each other avoiding possible conflicts with each other as well.
+
+\section{Product perspective}
+\begin{figure}
+	\includegraphics[width=\textwidth]{Use_Case_Diagramm.png}
+	\caption{Use Case Diagramm}
+	\label{fig:ucd}
+\end{figure}
+Players are featured in our diagram even though they are not interacting with our application directly because after all connecting to the servers is a crucial part of our system.
+Administration of the game servers with game specific features like Kicking, Banning and Map Rotations is also out of scope as there are already well polished Tools for this who can work independently from our Platform.
+The main use cases of our application is managing the game server containers.
+As such creation and configuration of severs is the milestone for our first semester, whereas Status reporting, managing server files, enabling network access to the containers network and managing server presets is in scope for the second semester.
 
 \chapter{Specific Requirements}
 {\color{blue} [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]}
