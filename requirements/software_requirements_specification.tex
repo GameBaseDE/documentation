@@ -1,7 +1,16 @@
 \documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,]{scrreprt}
 
+% Benannte Farben
 \usepackage{xcolor}
-\usepackage{vhistory}
+% Spracheinstellungen
+\usepackage[english]{babel}
+% [H] Platzierung
+\usepackage{float}
+% Tabellen
+\usepackage{tabu}
+% KOMA-Script Mods für float,hyperref,listings,setspace
+\RequirePackage{scrhack}
+
 \setlength{\parindent}{0pt}
 
 \begin{document}
@@ -14,12 +23,16 @@ Software Requirements Specification
 \bigbreak
 Version 1.0
 \end{flushright}
-\begin{versionhistory}
-	\vhEntry{1.0}{22.01.04}{JPW|KW}{created}
-	\vhEntry{1.1}{23.01.04}{DP|JPW}{correction}
-	\vhEntry{1.2}{03.02.04}{DP|JPW}{revised after review}
-	\vhEntry{1.3}{20.09.19}{SL}{initial adaptation}
-\end{versionhistory}
+\chapter*{Revision History}
+\begin{table}[H]
+	\centering
+	\everyrow{\hline}
+	\begin{tabu} to \textwidth {|X[c]|X[c]|X[c]|X[c]|}
+		Date & Version & Description & Author\\
+		<dd/mmm/yy> & <x.x> & <details> & <name>
+	\end{tabu}
+	\label{tab:rev-hist}
+\end{table}
 
 \tableofcontents
 
