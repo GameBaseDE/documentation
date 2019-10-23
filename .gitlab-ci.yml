@@ -10,7 +10,7 @@ compile-pdf:
   image: schickling/latex
   script:
     - cd requirements
-    - lualatex
+    - lualatex software_requirements_specification.tex
   artifacts:
     paths:
       - "requirements/*.pdf"
