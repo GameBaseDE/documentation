@@ -2,10 +2,6 @@
 # use docker image with latex preinstalled
 # since there is no official latex image, use https://github.com/blang/latex-docker
 # possible alternative: https://github.com/natlownes/docker-latex
-before_script:
-  - apt update && apt install -y tree
-  - lualatex --version
-
 compile-pdf:
   stage: build
   image: schickling/latex
@@ -19,6 +15,7 @@ compile-pdf:
 pages:
   stage: deploy
   script:
+    - apt update && apt install -y tree
     - mkdir public
     - cp requirements/*.pdf public
     - cd public
