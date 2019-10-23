@@ -2,12 +2,15 @@
 # use docker image with latex preinstalled
 # since there is no official latex image, use https://github.com/blang/latex-docker
 # possible alternative: https://github.com/natlownes/docker-latex
+before_script:
+  - apt-get update -qq && apt-get install -y -qq texlive-full tree
+  - lualatex --version
+
 compile-pdf:
   stage: build
-  image: blang/latex
   script:
     - cd requirements
-    - latexmk -lualatex -pdf
+    - lualatex
   artifacts:
     paths:
       - "requirements/*.pdf"
@@ -15,8 +18,6 @@ compile-pdf:
 pages:
   stage: deploy
   script:
-    - apt update
-    - apt install tree -y
     - mkdir public
     - cp requirements/*.pdf public
     - cd public
