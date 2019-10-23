@@ -4,6 +4,7 @@
 # possible alternative: https://github.com/natlownes/docker-latex
 before_script:
   - apt update -qq && apt install -y -qq tree
+  - lualatex --version
 
 compile-pdf:
   stage: build
