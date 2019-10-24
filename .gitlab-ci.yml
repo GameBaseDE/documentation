@@ -15,12 +15,10 @@ compile-pdf:
 pages:
   stage: deploy
   script:
-    - apt update
-    - apt install tree -y
     - mkdir public
     - cp requirements/*.pdf public
     - cd public
-    - tree -H '.' -L 1 --noreport --charset utf-8 > index.html
+    - find * | while read -r line; do echo "<a href=\"$line\">$line</a>"; done >> index.html
   artifacts:
     paths: 
       - public
