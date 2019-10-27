@@ -33,7 +33,7 @@ Version 1.0
 \chapter{Use-Case: Create GameServer}
 
 \section{Brief Description}
-The use case describes the creation, reading, updating and deleting of gameservers (CURD)
+The use case describes the creation of gameservers
 
 \chapter{Flow of Events}
 [Add Activity Diagram]
@@ -41,26 +41,14 @@ The use case describes the creation, reading, updating and deleting of gameserve
 
 \begin{itemize}
     \item User clicks on <<Create GameServer>>
-    \item User fills the form with the required options and parameteres
-    \item User clicks on <<Create>> to create the GameServer and gets redirected to the gameservers page
-    \item User clicks on <<Cancel>> to cancel the Create operation
+    \item User fills the form with the required information
+    \item User clicks on <<Create>> to create the GameServer and gets redirected to the gameservers configuration page
+    \item or the User clicks on <<Cancel>> to cancel the Create operation
 \end{itemize}
 
 \section{Creation}
-[include image]
-The creation of a new gameserver. The user will be asked to enter all required options and parameters for that gameserver.
-
-\section{Edit}
-[include image]
-The editing of a gameserver. The user will be able to edit the gameservers settings but not the game itself.
-
-\section{List}
-[include image]
-The user sees a list of all gameservers that are under his control and sees some short status information of each server.
-
-\section{Delete}
-[include image]
-The user may be able to delete the gameserver. This action cannot be undone, which is why he has to confirm this operation.
+[include image]\\
+The creation of a new gameserver. The user will be asked to select the type (game) of the gamserver.
 
 \chapter{Special Requirements}
 
@@ -71,18 +59,9 @@ The user has to be a registered user for our system.
 \section{Must be logged in}
 The user must be logged in to create, edit, see or delete a server.
 
-\section{Being allowed to edit the server}
-If the user wants to edit, see or delete a server, he must be a valid administrator for that specific server.
-
 \chapter{Postconditions}
 
 \section{Create}
-After creating the gameserver the user will be redirected to the list overview, where the new entry will already be displayed.
-
-\section{Edit}
-After the user saved his edits, the updated data will be displayed in the servers detailed page.
-
-\section{Delete}
-After confirming the deletion modal, the gameserver will be permanently removed and no longer displayed in the list overview.
+After creating the gameserver the user will be redirected to the gameservers configuration page to set all required configuration options for that server.
 
 \end{document}
