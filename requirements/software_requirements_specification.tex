@@ -16,6 +16,7 @@
 \RequirePackage{scrhack}
 % hyperref als letzes
 \RequirePackage{hyperref}
+<<<<<<< HEAD
 
 \hypersetup{
     colorlinks=true,
@@ -23,10 +24,18 @@
     filecolor=magenta,      
     urlcolor=cyan,
 }
+=======
+% Glossareinträge nach hyperref
+\RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
+
+% Füge andere Abkürzungen
+\input{srs_abbr.tex}
+\makeglossaries
+>>>>>>> GB-13: Rebase and rewrite "Usage of Software languages and frameworks"
 
 \setlength{\parindent}{0pt}
 
-\begin{document}
+\begin{document}	
 \begin{flushright}
 GameBase
 \\
@@ -66,7 +75,9 @@ The purpose of this document is to give a general description of the GameBase pr
 This document is designed for internal use only and will outline the development process of the project.
 
 \section{Definitions, Acronyms and Abbreviations}
-{\color{blue} [This subsection should provide the definitions of all terms, acronyms, and abbreviations required to properly interpret the SRS.  This information may be provided by reference to the project Glossary.]}
+\printabbreviations[title={}]
+
+lol \gls{k8s}
 
 \section{References}
 {\color{blue} [This subsection should provide a complete list of all documents referenced elsewhere in the SRS.  Each document should be identified by title, report number (if applicable), date, and publishing organization.  Specify the sources from which the references can be obtained. This information may be provided by reference to an appendix or to another document.]}
@@ -261,11 +272,11 @@ Our frontend, backend and each functionality will be clearly separated and we tr
  
 \subsection{{\color{magenta} Usage of Software languages and frameworks}}
 {\color{magenta}
-For the clientsided frontend we will use a mix of HTML, CSS, JavaScript and the ReactJS Framework. ReactJS helps building interactive UIs that can be updated dynamically and therefore eliminate the need to refresh the web application. One can also develop single components and can reuse them all over the application. Such a component could be a login form, a profile card or anything else one wants to reuse. We are going to import a React framework called Material-UI that provides a lot of pre-defined components based on the Material Design Specification. The development will take place with the newest version of JavaScript. Fortunately, our development environment is able to compile it to the lower version of JavaScript. Thus, we can use the newest features without having to worry about browser compatibility. Furthermore we will extend ReactJS with Redux. Redux allows us to keep track of state changes in the frontend and is able to notify other components about it.
+For the clientsided frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It also allows you to update content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and can reuse them all over the application. Such a component could be a login form, a profile card or anything else one wants to reuse. Aside from that, if we need any kind of POJOs that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple POJOs into TypeScript classes.
 
-The application server will be built as a Spring Boot application in Java. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. In our case, a REST Web Service which represents the interface between our front- and backend. As we want to benefit from the newest features of Java 13, the platform this service will be hosted on needs to support Java 13 or higher.
+The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approach in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all needed beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Deployment of this application will be easy as well. Spring Boot embeds a Tomcat instance which is run upon start of built .jar file. This means no Tomcat Server has to be set up. That allows us deploying it in Docker too.
 
-The container server in the backend will use the docker api module which is available in Go. Go claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
+The container server in the backend will use the Docker SDK which is available in Go. Go claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 }
 
 \subsection{{\color{magenta} Development tools}}
