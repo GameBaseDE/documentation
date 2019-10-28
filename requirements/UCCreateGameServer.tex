@@ -1,0 +1,71 @@
+\documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,book]{scrreprt}
+
+% Benannte Farben
+\usepackage{xcolor}
+% Schriftauswahl
+\usepackage{fontspec}
+% Spracheinstellungen
+\usepackage[english]{babel}
+% Grafiken einfügen
+\usepackage{graphicx}
+% [H] Platzierung
+\usepackage{float}
+% Tabellen
+\usepackage{tabu}
+% KOMA-Script Mods für float,hyperref,listings,setspace
+\RequirePackage{scrhack}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+\begin{flushright}
+GameBase
+\\
+Use-Case Specification: Create GameServer
+% \\
+% For <Subsystem or Feature>
+\bigbreak
+Version 1.0
+\end{flushright}
+
+\tableofcontents
+
+\chapter{Use-Case: Create GameServer}
+
+\section{Brief Description}
+The use case describes the creation of gameservers
+
+\chapter{Flow of Events}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{CreateGameserverActivityDiagramm.png}
+	\caption{Activity Diagramm}
+	\label{fig:ucd}
+\end{figure}
+\section{Basic flow}
+
+\begin{itemize}
+    \item User clicks on <<Create GameServer>>
+    \item User fills the form with the required information
+    \item User clicks on <<Create>> to create the GameServer and gets redirected to the gameservers configuration page
+    \item or the User clicks on <<Cancel>> to cancel the Create operation
+\end{itemize}
+
+\section{Creation}
+[include image]\\
+The creation of a new gameserver. The user will be asked to select the type (game) of the gamserver.
+
+\chapter{Special Requirements}
+
+\section{Owning an account}
+The user has to be a registered user for our system.
+
+\chapter{Preconditions}
+\section{Must be logged in}
+The user must be logged in to create, edit, see or delete a server.
+
+\chapter{Postconditions}
+
+\section{Create}
+After creating the gameserver the user will be redirected to the gameservers configuration page to set all required configuration options for that server.
+
+\end{document}
