@@ -4,9 +4,10 @@
 # possible alternative: https://github.com/natlownes/docker-latex
 compile-pdf:
   stage: build
-  image: blang/latex
+  image: nopreserveroot/arara
   script:
     - cd requirements
+    - arara --help
     - latexmk -lualatex -pdf
   artifacts:
     paths:
