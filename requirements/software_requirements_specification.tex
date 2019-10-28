@@ -16,22 +16,18 @@
 \RequirePackage{scrhack}
 % hyperref als letzes
 \RequirePackage{hyperref}
-<<<<<<< HEAD
-
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
-=======
 % Glossareinträge nach hyperref
 \RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
 
 % Füge andere Abkürzungen
 \input{srs_abbr.tex}
 \makeglossaries
->>>>>>> GB-13: Rebase and rewrite "Usage of Software languages and frameworks"
 
 \setlength{\parindent}{0pt}
 
@@ -142,7 +138,7 @@ As such creation and configuration of severs is the milestone for our first seme
 
 The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
 
-\subsection*{Server management and creation (3rd semester)}
+\subsection{Server management and creation (3rd semester)}
 Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
 \begin{itemize}
 	\item an already built one 
@@ -159,7 +155,7 @@ The functionality of management contains:
 	\item Recreating container (equals reinstallation)
 \end{itemize}
 
-\subsection*{Status reporting (4th semester)}
+\subsection{Status reporting (4th semester)}
 For better troubleshooting and further, concise information about a user's container, a status reporting system will be introduced. Example status can be:
 \begin{itemize}
 	\item Building...
@@ -169,10 +165,23 @@ For better troubleshooting and further, concise information about a user's conta
 	\item Stopped
 \end{itemize}
 
-\subsection*{Volume management (4th semester)}
+\subsection{Volume management (4th semester)}
 The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
 
-\subsection*{Preset registry ((3rd +) 4th semester)}
+\subsection{User system (3rd + 4th semester)}
+At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission system. According use cases are:
+
+\begin{itemize}
+	\item Register
+	\item Log in
+	\item Log out
+	\item Change profile
+	\item Delete profile
+\end{itemize}
+
+As of defined use case scopes, in the 3rd semester, we firstly stick to only one account with Basic authentication.
+
+\subsection{Preset registry ((3rd +) 4th semester)}
 Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
 
 The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
@@ -199,26 +208,8 @@ The frontend provides an user interface for the users to interact with and is ab
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{{User system}}
-{\color{magenta}
-At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission-system. According use cases are:
 
-\begin{itemize}
-    \item Register
-    \item Login
-    \item Logout
-    \item Change profile
-    \item Delete profile
-\end{itemize}
-}
-
-\subsection{{\color{magenta} App server system}}
-See use-cases:
-\begin{itemize}
-    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
-    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
-\end{itemize}
-{\color{magenta}
+\subsection{{App server system}}
 The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using sane default configurations. According use cases are:
 
 \begin{itemize}
@@ -227,21 +218,24 @@ The user interface exposes several highly abstracted options for investigating a
     \item View deployment/container status
     \item View reports/logs/metrics
 \end{itemize}
-}
 
-\section{{\color{magenta} Usability}}
+You can see some use cases here:
+\begin{itemize}
+	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
+	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
+\end{itemize}
+
+\section{Usability}
 % [This section should include all of those requirements that affect usability. For example,
 % \begin{itemize}
 % 	\item specify the required training time for a normal users and a power user to become productive at particular operations
 % 	\item specify measurable task times for typical tasks or base the new system’s usability requirements on other systems that the users know and like
 % 	\item specify requirement to conform to common usability standards, such as IBM’s CUA standards Microsoft’s GUI standards]
 % \end{itemize}
+We will build the user interface intuitive, so that a new user does not necessarily need an explanation or in-depth training, even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
 
-{\color{magenta}
-We will build the user interface intuitive, so that a new user does not necessarily need an explanation. Even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
-}
 
-\section{{\color{magenta} Reliability}}
+\section{Reliability}
 % [Requirements for reliability of the system should be specified here. Some suggestions follow:
 % \begin{itemize}
 % 	\item Availability—specify the percentage of time available ( xx.xx%), hours of use, maintenance access, degraded mode operations, etc.
@@ -251,37 +245,31 @@ We will build the user interface intuitive, so that a new user does not necessar
 % 	\item Maximum Bugs or Defect Rate—usually expressed in terms of bugs per thousand of lines of code (bugs/KLOC) or bugs per function-point( bugs/function-point).
 % 	\item Bugs or Defect Rate—categorized in terms of minor, significant, and critical bugs: the requirement(s) must define what is meant by a “critical” bug; for example, complete loss of data or a complete inability to use certain parts of the system’s functionality.]
 % \end{itemize}
-{\color{magenta}
-In the following we describe the availability, Mean Time Between Failures and Mean Time To Repair, accuracy and bug classes we strive for.
-}
 
 % \subsection{<Reliability Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} Availability}}
-{\color{magenta}
-Since we want to provide hosting for our users but also allow them to host the software for themselves or using other providers, we cannot specify this requirement in great detail. Ultimately even the reliability of our own hosting option would be subject to the capabilities of our hosting provider. Due redundancy and other security arrangements, most providers can ensure an uptime of over 99.9\% which equates to approximately 8 hours per year. It is thus reasonable to assume that a sufficiently mature implementation of the software can achieve comparable reliability.
-}
+\subsection{Availability}
+Our software won't be only used personally, but we also think about a commercial usage.
+In case of personal usage, we cannot make any real assessment of availability. But we can have a passive effect on it e. g. by providing bug fixes as soon as possible.
+On commercial usage, availability depends rather on the provider/hoster. Most of the time, most providers advertise with an update of 99.9\%.
 
-\subsection{{\color{magenta} Mean Time Between Failures \& Mean Time To Repair}}
-{\color{magenta}
-If the application fails due an hardware issue, then the mean times are up to our hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, we can revert the code to a previous version that worked fine. This shouldn't take more than one or two hours from the point on we noticed.
-}
+\subsection{Mean Time Between Failures \& Mean Time To Repair}
+If the application fails due an hardware issue, then the mean times are up to one's hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, it is possible to revert to a previous version that has worked fine. However, we need to be careful about backward compatibility issues.
 
-\subsection{{\color{magenta} Accuracy}}
-{\color{magenta}
+\subsection{Accuracy}
 The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our controll. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
-}
 
-\subsection{{\color{magenta} Bug classes}}
-{\color{magenta}
+\subsection{Bug classes}
 We classify bugs which might appear in the software into either one of these two categories:
 
 \begin{itemize}
-    \item Critical bug: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
-    \item Non-critical bug: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
+    \item {\color{magenta}\textbf{Critical bug}: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
+    	
+    	\emph{Comment: Do we really want to be responsible for data breaches? Wrongly configured database faulty of 3rd person can be a cause too!}
+    }
+    \item \textbf{Non-critical bug}: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
 \end{itemize}
-}
 
 \section{{\color{blue} Performance}}
 {\color{blue} [The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
@@ -391,6 +379,6 @@ The container server in the backend will use the Docker SDK which is available i
 % 	\item Appendices
 % \end{itemize}
 % These may include use-case storyboards or user-interface prototypes. When appendices are included, the SRS should explicitly state whether or not the appendices are to be considered part of the requirements.]
-[not applicable]
+\gls{na}
 
 \end{document}
