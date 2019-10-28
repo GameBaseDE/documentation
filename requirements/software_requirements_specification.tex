@@ -72,15 +72,33 @@ The purpose of this document is to give a general description of the GameBase pr
 
 \section{Scope}
 % [A brief description of the software application that the SRS applies to; the feature or other subsystem grouping; what Use-Case model(s) it is associated with;  and anything else that is affected or influenced by this document.]
-This document is designed for internal use only and will outline the development process of the project.
+\section*{Target group}
+We want to offer our software to everyone who wants easy game server management and deployment without heavily modifying their system. It can be also used in an commercial environment like hosting game server services to other people.
+
+\section*{Components}
+This software is divided into two obvious components
+\begin{itemize}
+	\item Frontend (End-user server management)
+	\item Backend (Deployment to specified destination, Docker Image creation)
+\end{itemize}
+
 
 \section{Definitions, Acronyms and Abbreviations}
 \printabbreviations[title={}]
 
-lol \gls{k8s}
-
 \section{References}
-{\color{blue} [This subsection should provide a complete list of all documents referenced elsewhere in the SRS.  Each document should be identified by title, report number (if applicable), date, and publishing organization.  Specify the sources from which the references can be obtained. This information may be provided by reference to an appendix or to another document.]}
+\begin{table}[H]
+	\centering
+	\everyrow{\hline}
+	\begin{tabu} to \textwidth {|X[c]|X[c]|X[c]|}
+		\textbf{Title} & \textbf{Date} & \textbf{Author} \\
+		\href{https://gitlab.tandashi.de/GameBase}{Git Repository} & 10/23/2019 & GameBase \\
+		\href{https://youtrack.gahr.dev}{YouTrack} & 10/23/2019 & GameBase \\
+		\href{https://gahr.dev}{Blog} & 10/23/2019 & GameBase \\
+		\href{https://www.docker.com/}{Docker} & 10/23/2019 & Docker Inc. \\		
+	\end{tabu}
+	\label{tab:references-tabview}
+\end{table}
 
 \section{Overview}
 % [This subsection should describe what the rest of the SRS contains and explain how the document is organized.]
@@ -97,7 +115,7 @@ The next chapters provide information about our vision based on a use case diagr
 % 	\item assumptions and dependencies
 % 	\item requirements subsets
 % \end{itemize}]
-Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don’t have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
+Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don't have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
 
 With GameBase, we want to make your game server deployment life way easier. Using Docker – a state-of-the-art virtualisation technology – servers can be set up through templates on a website and ready to be deployed with just one click. This also makes sure that every game server is isolated from each other avoiding possible conflicts with each other as well.
 
@@ -108,39 +126,67 @@ With GameBase, we want to make your game server deployment life way easier. Usin
 	\label{fig:ucd}
 \end{figure}
 Players are featured in our diagram even though they are not interacting with our application directly because after all connecting to the servers is a crucial part of our system.
-Administration of the game servers with game specific features like Kicking, Banning and Map Rotations is also out of scope as there are already well polished Tools for this who can work independently from our Platform.
-The main use cases of our application is managing the game server containers.
-As such creation and configuration of severs is the milestone for our first semester, whereas Status reporting, managing server files, enabling network access to the containers network and managing server presets is in scope for the second semester.
+
+Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently. As we want to offer an experience of settings up any kind of game servers
+
+The main use cases of our application are managing the game server containers.
+As such creation and configuration of severs is the milestone for our first semester, whereas status reporting, managing server files, ((((((enabling network access to the containers network ))))))and managing server presets is in scope for the second semester.
 
 \chapter{Specific Requirements}
-{\color{blue} [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]}
+% [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]
 
 \section{Functionality - Backend}
-{\color{blue} [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
+% [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
 
-Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]}
+% Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-{\color{magenta}
+The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
+
+\section*{Server management and creation (3rd semester)}
+Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
+\begin{itemize}
+	\item an already built one 
+	\item or be built by \emph{Dockerfile}.
+\end{itemize}
+ 
+ 
+The functionality of management contains:
+\begin{itemize}
+	\item Start, stop and kill server
+	\item Create container
+	\item Configuring server (ports, player slots, RAM usage, ...)
+	\item Select deployment method
+	\item Recreating container (equals reinstallation)
+\end{itemize}
+
+\section*{Status reporting (4th semester)}
+For better troubleshooting and further, concise information about a user's container, a status reporting system will be introduced. Example status can be:
+\begin{itemize}
+	\item Building...
+	\item Starting...
+	\item Running
+	\item Stopping...
+	\item Stopped
+\end{itemize}
+
+\section*{Volume management (4th semester)}
+The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
+
+\section*{Preset registry ((3rd +) 4th semester)}
+Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
+
 The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
-}
 
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} Read data given over API endpoints}}
-{\color{magenta}
-For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request and waits for a response from the backend which also answers with JSON.
-}
+\subsection{Read and parse data passed by API endpoints}
+For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request via an HTTP client and waits for a response from the backend which also answers with JSON.
 
-\subsection{{\color{magenta} Parse data}}
-{\color{magenta}
-For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request and waits for a response from the backend which also answers with JSON.
-}
+It's important to validate input and output data in order to avoid malfunctions or possible abuse of undetected bugs. In case of sharing \gls{dto} files we need to make sure that we have a centralized module which can be added as dependency by any component.
 
-\subsection{{\color{magenta} Provide data}}
-{\color{magenta}
+\subsection{Provide data}
 After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned DTO objects. In addition, the response contains a HTTP status code even if the request failed so that the frontend knows if it just received data or an error.
-}
 
 \section{Functionality - Frontend}
 {\color{blue} [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
@@ -295,7 +341,7 @@ The container server in the backend will use the Docker SDK which is available i
 \section{{\color{blue} On-line User Documentation and Help System Requirements}}
 {\color{blue} [Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.]}\\
 
-[to be determined]
+\gls{tbd}
 
 \section{Purchased Components}
 % [This section describes any purchased components to be used with the system, any applicable licensing or usage restrictions, and any associated compatibility and interoperability or interface standards.]
@@ -304,15 +350,15 @@ The container server in the backend will use the Docker SDK which is available i
 \section{{\color{blue} Interfaces}}
 {\color{blue} [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]}\\
 
-[to be determined]
+\gls{tbd}
 
 \subsection{{\color{blue} User Interfaces}}
 % [Describe the user interfaces that are to be implemented by the software.]
-[to be determined]
+\gls{tbd}
 
 \subsection{Hardware Interfaces}
 % [This section defines any hardware interfaces that are to be supported by the software, including logical structure, physical addresses, expected behavior, etc. ]
-[not applicable]
+\gls{na}
 
 \subsection{Software Interfaces}
 % [This section describes software interfaces to other components of the software system. These may be purchased components, components reused from another application or components being developed for subsystems outside of the scope of this SRS but with which this software application must interact.]
@@ -321,22 +367,22 @@ The container server in the backend will use the Docker SDK which is available i
 
 \subsection{Communications Interfaces}
 % [Describe any communications interfaces to other systems or devices such as local area networks, remote serial devices, etc.]
-[not applicable]
+\gls{na}
 
 \section{{\color{blue} Licensing Requirements}}
 {\color{blue} [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]}\\
 
-[to be determined]
+\gls{tbd}
 
 \section{{\color{blue} Legal, Copyright, and Other Notices}}
 {\color{blue} [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]}\\
 
-[to be determined]
+\gls{tbd}
 
 \section{{\color{blue} Applicable Standards}}
 {\color{blue} [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]}\\
 
-[to be determined]
+\gls{tbd}
 
 \chapter{Supporting Information}
 % [The supporting information makes the SRS easier to use.  It includes:
