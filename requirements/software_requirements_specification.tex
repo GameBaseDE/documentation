@@ -14,6 +14,15 @@
 \usepackage{tabu}
 % KOMA-Script Mods für float,hyperref,listings,setspace
 \RequirePackage{scrhack}
+% hyperref als letzes
+\RequirePackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 
 \setlength{\parindent}{0pt}
 
@@ -148,6 +157,11 @@ At registration, the data provided by the user is stored in the backend. It is n
 }
 
 \subsection{{\color{magenta} App server system}}
+See use-cases:
+\begin{itemize}
+    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
+    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
+\end{itemize}
 {\color{magenta}
 The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using sane default configurations. According use cases are:
 
