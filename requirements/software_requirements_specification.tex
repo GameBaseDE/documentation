@@ -12,15 +12,17 @@
 \usepackage{float}
 % Tabellen
 \usepackage{tabu}
-\usepackage{hyperref}
+% KOMA-Script Mods für float,hyperref,listings,setspace
+\RequirePackage{scrhack}
+% hyperref als letzes
+\RequirePackage{hyperref}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
-% KOMA-Script Mods für float,hyperref,listings,setspace
-\RequirePackage{scrhack}
 
 \setlength{\parindent}{0pt}
 
