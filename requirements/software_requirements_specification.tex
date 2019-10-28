@@ -72,10 +72,10 @@ The purpose of this document is to give a general description of the GameBase pr
 
 \section{Scope}
 % [A brief description of the software application that the SRS applies to; the feature or other subsystem grouping; what Use-Case model(s) it is associated with;  and anything else that is affected or influenced by this document.]
-\section*{Target group}
+\subsection*{Target group}
 We want to offer our software to everyone who wants easy game server management and deployment without heavily modifying their system. It can be also used in an commercial environment like hosting game server services to other people.
 
-\section*{Components}
+\subsection*{Components}
 This software is divided into two obvious components
 \begin{itemize}
 	\item Frontend (End-user server management)
@@ -142,7 +142,7 @@ As such creation and configuration of severs is the milestone for our first seme
 
 The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
 
-\section*{Server management and creation (3rd semester)}
+\subsection*{Server management and creation (3rd semester)}
 Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
 \begin{itemize}
 	\item an already built one 
@@ -159,7 +159,7 @@ The functionality of management contains:
 	\item Recreating container (equals reinstallation)
 \end{itemize}
 
-\section*{Status reporting (4th semester)}
+\subsection*{Status reporting (4th semester)}
 For better troubleshooting and further, concise information about a user's container, a status reporting system will be introduced. Example status can be:
 \begin{itemize}
 	\item Building...
@@ -169,10 +169,10 @@ For better troubleshooting and further, concise information about a user's conta
 	\item Stopped
 \end{itemize}
 
-\section*{Volume management (4th semester)}
+\subsection*{Volume management (4th semester)}
 The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
 
-\section*{Preset registry ((3rd +) 4th semester)}
+\subsection*{Preset registry ((3rd +) 4th semester)}
 Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
 
 The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
@@ -189,18 +189,17 @@ It's important to validate input and output data in order to avoid malfunctions 
 After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned DTO objects. In addition, the response contains a HTTP status code even if the request failed so that the frontend knows if it just received data or an error.
 
 \section{Functionality - Frontend}
-{\color{blue} [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
+%[This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
 
-Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]}
+% Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-{\color{magenta}
 The frontend provides an user interface for the users to interact with and is able to request data from the data backend. The following subsections explain the types of data the frontend can request. Each of the subsections corresponds to one or more use cases.
-}
+
 
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} User system}}
+\subsection{{User system}}
 {\color{magenta}
 At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission-system. According use cases are:
 
