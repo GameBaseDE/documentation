@@ -271,24 +271,36 @@ We classify bugs which might appear in the software into either one of these two
     \item \textbf{Non-critical bug}: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
 \end{itemize}
 
-\section{{\color{blue} Performance}}
-{\color{blue} [The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
- \begin{itemize}
- 	\item response time for a transaction (average, maximum)
- 	\item throughput, for example, transactions per second
- 	\item capacity, for example, the number of customers or transactions the system can accommodate
-	\item degradation modes (what is the acceptable mode of operation when the system has been degraded in some manner)
-	\item resource utilization, such as memory, disk, communications, etc.
- \end{itemize}]}
+\section{Performance}
+%[The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
+ %\begin{itemize}
+ %	\item response time for a transaction (average, maximum)
+ %	\item throughput, for example, transactions per second
+ %	\item capacity, for example, the number of customers or transactions the system can accommodate
+%	\item degradation modes (what is the acceptable mode of operation when the system has been degraded in some manner)
+%	\item resource utilization, such as memory, disk, communications, etc.
+ %\end{itemize}]
+Performance is a significant aspect for fluent usage and operation.
 
-{\color{magenta}
-In general, we try to keep to user experience fluent and response times low.
-}
+\subsection{Response time}
+Our users' resources and requirements to our software may vary. This leads to different results which cannot be explicitly predicted or affected by us. A contribution to response can be made by following our guidelines during development and testing.
 
-% \subsection{<Performance Requirement One>}
-% [The requirement description goes here.]
+For instance, by using \emph{GoLang}, its parallelism algorithm should provide a better base of finishing concurrent task faster and safer.
 
-\section{{\color{magenta} Supportability}}
+\subsection{Throughput}
+We don't expect a high volume of data transfer when using our software on personal purpose. If it comes to a bigger environment as in hosting and selling game servers, it's possible to scale our application as it is build with Docker. 
+
+
+\subsection{Capacity}
+By optimizing our Docker builds, we try to keep the size of volume layers as compact as possible. This guarantees faster deployment.
+
+
+\subsection{Degradation modes}
+The application should under any circumstance maintain links or access to the container after for example the frontend has crashed. It should be able to recover by trying to restart itself. Otherwise the application should try to shutdown any running container associated with GameBase safely and gracefully. 
+
+% \subsection{Resource utilization}
+
+\section{Supportability}
 % [This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.]
 {\color{magenta}
 Our frontend, backend and each functionality will be clearly separated and we try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
