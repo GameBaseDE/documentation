@@ -326,23 +326,15 @@ We want to develop quality software. As a measurement, unit, integration tests a
 	\item \textbf{CI/CD}: During development process, we test bleeding edge code in CI bots. Those run unit and integration tests. Additionally, \emph{SonarQube} can be used in order to detect common coding mistakes or code smells. The developer decides whether to fix them or not, but also has to make sure that a certain threshold for declining the build is not reached.
 \end{itemize}
 
-% \subsection{<Supportability Requirement One>}
-% [The requirement description goes here.]
-
 \section{Design Constraints}
 % [This section should indicate any design constraints on the system being built. Design constraints represent design decisions that have been mandated and must be adhered to.  Examples include software languages, software process requirements, prescribed use of developmental tools, architectural and design constraints, purchased components, class libraries, etc.]
 
-% \subsection{<Design Constraint One>}
-% [The requirement description goes here.]
- 
-\subsection{{\color{magenta} Usage of Software languages and frameworks}}
-{\color{magenta}
-For the clientsided frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It also allows you to update content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and can reuse them all over the application. Such a component could be a login form, a profile card or anything else one wants to reuse. Aside from that, if we need any kind of POJOs that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple POJOs into TypeScript classes.
+\subsection{Usage of software languages and frameworks}
+For the frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It updates content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and reuse them all over the application. An example component could be a login form, a profile card or dashboard widgets. Aside from that, if we need any kind of \gls{dto}s that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple \gls{dto}s into TypeScript classes. \\
 
-The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approach in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all needed beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Deployment of this application will be easy as well. Spring Boot embeds a Tomcat instance which is run upon start of built .jar file. This means no Tomcat Server has to be set up. That allows us deploying it in Docker too.
+The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approaches in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all required beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Due to Spring Boot's embedded Tomcat instance deploying our application is very easy. It is run upon start of built .jar file thus no Tomcat Server has to be set up. That allows us deploying it in Docker too. \\
 
-The container server in the backend will use the Docker SDK which is available in Go. Go claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
-}
+The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 
 \subsection{{\color{magenta} Development tools}}
 {\color{magenta}
