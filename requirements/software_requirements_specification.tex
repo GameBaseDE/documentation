@@ -304,9 +304,19 @@ The application should under any circumstance maintain links or access to the co
 
 \section{Supportability}
 % [This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.]
-{\color{magenta}
-Our frontend, backend and each functionality will be clearly separated and we try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
-}
+Our frontend and backend will be clearly separated. A benefit is that each component acts independently and thus can be maintained separately without getting in conflicts with other components - unless a breaking change is planned, obviously. We try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
+
+\subsection{Coding guidelines}
+As we use different programming languages, different code styles which are common among these are present. We might try out some tools like \emph{CheckStyle} or internal formatter (JetBrains IDEs) to check code formatting and show warnings if a snippet is not compliant. \\
+
+These are the code conventions we stick to:
+\begin{itemize}
+	\item \textbf{Kotlin}: \href{https://kotlinlang.org/docs/reference/coding-conventions.html}{JetBrains' Coding Convention}
+	\item \textbf{Java}: \href{https://google.github.io/styleguide/javaguide.html}{Google's Java Style Guide}
+	\item \textbf{Go}: \href{https://golang.org/doc/effective_go.html}{Effective Go}
+	\item \textbf{TypeScript}: \href{https://github.com/microsoft/TypeScript/wiki/Coding-guidelines}{Microsoft's TypeScript coding guidelines}
+	\item \textbf{TypeScript/Angular}: \href{https://angular.io/guide/styleguide}{Angular Style Guide}
+\end{itemize}
 
 % \subsection{<Supportability Requirement One>}
 % [The requirement description goes here.]
