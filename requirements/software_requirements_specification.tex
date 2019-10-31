@@ -50,7 +50,7 @@ Version 1.0
 		10/23/2019 & 0.1 & Added Use Case Diagram & Norman Gehrsitz \\
 		10/28/2019 & 0.2 & Added Activity Diagram for creating and configuring game server & Leonhard Gahr \\
 		10/xx/2019 & 1.0 & Complete current state of information & Kevin Reis \\
-		<mm/dd/yyyy> & <x.x> & <details> & <name>\\
+		% <mm/dd/yyyy> & <x.x> & <details> & <name>\\
 	\end{tabu}
 	\label{tab:rev-hist}
 \end{table}
@@ -70,7 +70,7 @@ The purpose of this document is to give a general description of the GameBase pr
 
 \section{Scope}
 % [A brief description of the software application that the SRS applies to; the feature or other subsystem grouping; what Use-Case model(s) it is associated with;  and anything else that is affected or influenced by this document.]
-\subsection*{Target group}
+\subsection*{Target Group}
 We want to offer our software to everyone who wants easy game server management and deployment without heavily modifying their system. It can be also used in an commercial environment like hosting game server services to other people.
 
 \subsection*{Components}
@@ -79,7 +79,6 @@ This software is divided into two obvious components
 	\item Frontend (End-user server management)
 	\item Backend (Deployment to specified destination, Docker Image creation)
 \end{itemize}
-
 
 \section{Definitions, Acronyms and Abbreviations}
 \printabbreviations[title={}]
@@ -140,7 +139,7 @@ The main use case of our application is the easy management of game server conta
 
 The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
 
-\subsection{Server management and creation (3rd semester)}
+\subsection{Server Management and Creation (3rd semester)}
 Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
 \begin{itemize}
 	\item an already built one 
@@ -157,7 +156,7 @@ The functionality of management contains:
 	\item Recreating container (equals reinstallation)
 \end{itemize}
 
-\subsection{Status reporting (4th semester)}
+\subsection{Status Reporting (4th semester)}
 For better troubleshooting and further, concise information about a user's container, a status reporting system will be introduced. Example status can be:
 \begin{itemize}
 	\item Building...
@@ -167,10 +166,10 @@ For better troubleshooting and further, concise information about a user's conta
 	\item Stopped
 \end{itemize}
 
-\subsection{Volume management (4th semester)}
+\subsection{Volume Management (4th semester)}
 The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
 
-\subsection{User system (3rd + 4th semester)}
+\subsection{User System (3rd + 4th semester)}
 At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission system. According use cases are:
 
 \begin{itemize}
@@ -183,7 +182,7 @@ At registration, the data provided by the user is stored in the backend. It is n
 
 As of defined use case scopes, in the 3rd semester, we firstly stick to only one account with Basic authentication.
 
-\subsection{Preset registry ((3rd +) 4th semester)}
+\subsection{Preset Registry ((3rd +) 4th semester)}
 Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
 
 The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
@@ -191,12 +190,12 @@ The backend is needed to separate the user interface from the data storage. It v
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{Read and parse data passed by API endpoints}
+\subsection{Read and Parse Data Passed by API Endpoints}
 For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request via an HTTP client and waits for a response from the backend which also answers with JSON.
 
 It's important to validate input and output data in order to avoid malfunctions or possible abuse of undetected bugs. In case of sharing \gls{dto} files we need to make sure that we have a centralized module which can be added as dependency by any component.
 
-\subsection{Provide data}
+\subsection{Provide Data}
 After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned DTO objects. In addition, the response contains a HTTP status code even if the request failed so that the frontend knows if it just received data or an error.
 
 \section{Functionality - Frontend}
@@ -211,7 +210,7 @@ The frontend provides an user interface for the users to interact with and is ab
 % [The requirement description.]
 
 
-\subsection{{App server system}}
+\subsection{Application Server}
 The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using sane default configurations. According use cases are:
 
 \begin{itemize}
@@ -262,7 +261,7 @@ If the application fails due an hardware issue, then the mean times are up to on
 \subsection{Accuracy}
 The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our controll. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
 
-\subsection{Bug classes}
+\subsection{Bug Classes}
 We classify bugs which might appear in the software into either one of these two categories:
 
 \begin{itemize}
@@ -284,7 +283,7 @@ We classify bugs which might appear in the software into either one of these two
  %\end{itemize}]
 Performance is a significant aspect for fluent usage and operation.
 
-\subsection{Response time}
+\subsection{Response Time}
 Our users' resources and requirements to our software may vary. This leads to different results which cannot be explicitly predicted or affected by us. A contribution to response can be made by following our guidelines during development and testing.
 
 For instance, by using \emph{GoLang}, its parallelism algorithm should provide a better base of finishing concurrent task faster and safer.
@@ -297,7 +296,7 @@ We don't expect a high volume of data transfer when using our software on person
 By optimizing our Docker builds, we try to keep the size of volume layers as compact as possible. This guarantees faster deployment.
 
 
-\subsection{Degradation modes}
+\subsection{Degradation Modes}
 The application should under any circumstance maintain links or access to the container after for example the frontend has crashed. It should be able to recover by trying to restart itself. Otherwise the application should try to shutdown any running container associated with GameBase safely and gracefully. 
 
 % \subsection{Resource utilization}
@@ -306,7 +305,7 @@ The application should under any circumstance maintain links or access to the co
 % [This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.]
 Our frontend and backend will be clearly separated. A benefit is that each component acts independently and thus can be maintained separately without getting in conflicts with other components - unless a breaking change is planned, obviously. We try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
 
-\subsection{Coding guidelines}
+\subsection{Coding Guidelines}
 As we use different programming languages, different code styles which are common among these are present. We might try out some tools like \emph{CheckStyle} or internal formatter (JetBrains IDEs) to check code formatting and show warnings if a snippet is not compliant. \\
 
 These are the code conventions we stick to:
@@ -318,7 +317,7 @@ These are the code conventions we stick to:
 	\item \textbf{TypeScript/Angular}: \href{https://angular.io/guide/styleguide}{Angular Style Guide}
 \end{itemize}
 
-\subsection{Quality assurance}
+\subsection{Quality Assurance}
 \label{sec:support_qa}
 We want to develop quality software. As a measurement, unit, integration tests and a basic concept are quintessential. We integrate these steps in three levels:
 \begin{itemize}
@@ -330,14 +329,14 @@ We want to develop quality software. As a measurement, unit, integration tests a
 \section{Design Constraints}
 % [This section should indicate any design constraints on the system being built. Design constraints represent design decisions that have been mandated and must be adhered to.  Examples include software languages, software process requirements, prescribed use of developmental tools, architectural and design constraints, purchased components, class libraries, etc.]
 
-\subsection{Usage of software languages and frameworks}
+\subsection{Usage of Software Languages and Frameworks}
 For the frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It updates content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and reuse them all over the application. An example component could be a login form, a profile card or dashboard widgets. Aside from that, if we need any kind of \gls{dto}s that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple \gls{dto}s into TypeScript classes. \\
 
 The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approaches in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all required beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Due to Spring Boot's embedded Tomcat instance deploying our application is very easy. It is run upon start of built .jar file thus no Tomcat Server has to be set up. That allows us deploying it in Docker too. \\
 
 The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 
-\subsection{Development tools and libraries}
+\subsection{Development Tools and Libraries}
 To make development efficient, we're using the following tools:
 
 \subsection*{Organization}
@@ -363,7 +362,7 @@ To make development efficient, we're using the following tools:
 	\item \textbf{Gradle}: Build management
 \end{itemize}
 
-\subsection*{Code quality}
+\subsection*{Code Quality}
 \begin{itemize}
 	\item \textbf{IDE Formatter}: Appopriate formatting for compliance of coding guidelines. (\textit{Note}: Usage of formatter might not always apply.)
 	\item \textbf{CheckStyle}: Code style check before commiting
