@@ -126,10 +126,9 @@ With GameBase, we want to make your game server deployment life way easier. Usin
 \end{figure}
 Players are featured in our diagram even though they are not interacting with our application directly because after all connecting to the servers is a crucial part of our system.
 
-Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently. As we want to offer an experience of settings up any kind of game servers
+Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently. As we want to offer an experience of settings up any kind of game servers.
 
-The main use cases of our application are managing the game server containers.
-As such creation and configuration of severs is the milestone for our first semester, whereas status reporting, managing server files, ((((((enabling network access to the containers network ))))))and managing server presets is in scope for the second semester.
+The main use case of our application is the easy management of game server containers created by Docker. We split up its functionality into two semester.
 
 \chapter{Specific Requirements}
 % [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]
@@ -320,6 +319,7 @@ These are the code conventions we stick to:
 \end{itemize}
 
 \subsection{Quality assurance}
+\label{sec:support_qa}
 We want to develop quality software. As a measurement, unit, integration tests and a basic concept are quintessential. We integrate these steps in three levels:
 \begin{itemize}
 	\item \textbf{Upon concept}: Before starting developing, the person who just assigned themselves an issue needs to create a concept for solving the problem first. This doesn't have to be very explicitly detailed, but at least show the kind of tools or approaches you're trying to use to combat the problem. Afterwards, the concept is reviewed by another team member, ideally in form of peer reviews.
@@ -426,18 +426,19 @@ This depends on the decision of which Docker socket to use stated in the section
 If \textit{Docker Socket} is used, at least one \textit{Docker network} must be shared among all containers in order to enable status reporting to GameBase. \\
 \gls{tbd}
 
-\section{{\color{blue} Licensing Requirements}}
-{\color{blue} [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]}\\
-
+\section{Licensing Requirements}
+% [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]
+We still discuss which license to use that is appropriate for us.\\
 \gls{tbd}
 
-\section{{\color{blue} Legal, Copyright, and Other Notices}}
-{\color{blue} [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]}\\
-
+\section{Legal, Copyright, and Other Notices}
+% [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]
+GameBase is not responsible for any kind of damage that is done when using our software. 
 \gls{tbd}
 
-\section{{\color{blue} Applicable Standards}}
-{\color{blue} [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]}\\
+\section{Applicable Standards}
+% [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]
+In terms of code standard, please read section \ref{sec:support_qa}. \\
 
 \gls{tbd}
 
@@ -449,6 +450,13 @@ If \textit{Docker Socket} is used, at least one \textit{Docker network} must be 
 % 	\item Appendices
 % \end{itemize}
 % These may include use-case storyboards or user-interface prototypes. When appendices are included, the SRS should explicitly state whether or not the appendices are to be considered part of the requirements.]
-\gls{na}
+If you want to reach out to use, feel free to write us an e-mail:
+\begin{itemize}
+	\item \href{mailto:gahr.leonhard@student.dhbw-karlsruhe.de}{Leonhard Gahr}
+	\item \href{mailto:gehrsitz.norman@student.dhbw-karlsruhe.de}{Norman Gehrsitz}
+	\item \href{mailto:lukas.stefan@student.dhbw-karlsruhe.de}{Stefan Lukas}
+	\item \href{mailto:reis.kevin@student.dhbw-karlsruhe.de}{Kevin Reis}
+\end{itemize}
 
+Otherwise, take a look at section \ref{tab:references-tabview} for other possibilities to reach us out.
 \end{document}
