@@ -93,7 +93,8 @@ This software is divided into two obvious components
 		\href{https://gitlab.tandashi.de/GameBase}{Git Repository} & 10/23/2019 & GameBase \\
 		\href{https://youtrack.gahr.dev}{YouTrack} & 10/23/2019 & GameBase \\
 		\href{https://gahr.dev}{Blog} & 10/23/2019 & GameBase \\
-		\href{https://www.docker.com/}{Docker} & 10/23/2019 & Docker Inc. \\		
+		\href{https://www.docker.com/}{Docker} & 10/23/2019 & Docker Inc. \\
+		\href{https://cloud.google.com/}{Google Cloud Services} & 10/31/2019 & Google Ltd. \\
 	\end{tabu}
 	\label{tab:references-tabview}
 \end{table}
@@ -382,27 +383,48 @@ To make development efficient, we're using the following tools:
 % [This section describes any purchased components to be used with the system, any applicable licensing or usage restrictions, and any associated compatibility and interoperability or interface standards.]
 \gls{na}
 
-\section{{\color{blue} Interfaces}}
-{\color{blue} [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]}\\
+\section{Interfaces}
+% [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]
+Interfaces for production release are \gls{tbd}.
 
-\gls{tbd}
-
-\subsection{{\color{blue} User Interfaces}}
+\subsection{User Interfaces}
 % [Describe the user interfaces that are to be implemented by the software.]
-\gls{tbd}
+To ensure that the user can interact with our system, we need to implement (at least) these interface items:
+\begin{itemize}
+	\item Angular web frontend
+	\item Creation and control of containers
+	\item Container status reporting
+	\item Creation of custom images
+	\item Attachment to container console
+	\item Server files management
+	\item Deployment method selection
+	\item User management system
+	\item Update reminder
+\end{itemize}
 
 \subsection{Hardware Interfaces}
 % [This section defines any hardware interfaces that are to be supported by the software, including logical structure, physical addresses, expected behavior, etc. ]
-\gls{na}
+We cannot make precise interface requirements for our software. The reason for this is that we want to develop our software that functions as a distributed environment.
+\begin{itemize}
+	\item \textbf{OS}: Should be supported by any OS that fulfill \href{https://www.docker.com/}{requirements of using Docker}.
+	\item \textbf{Orchestration systems/providers}: Local backend, \gls{k8s}, \gls{aws}, \gls{gcs}
+\end{itemize}
+\gls{tbd}
 
 \subsection{Software Interfaces}
 % [This section describes software interfaces to other components of the software system. These may be purchased components, components reused from another application or components being developed for subsystems outside of the scope of this SRS but with which this software application must interact.]
-[described in "Design constraints"]
-% FIXME: use autoref
+A huge requirement/major dependency is access to host system's Docker. This can be resolved with either:
+\begin{itemize}
+	\item Docker Socket (For Linux: unix:///var/run/docker.sock)
+	\item Docker-in-docker* (Requires privileged container environment)
+\end{itemize}
+\gls{tbd}
 
 \subsection{Communications Interfaces}
 % [Describe any communications interfaces to other systems or devices such as local area networks, remote serial devices, etc.]
-\gls{na}
+This depends on the decision of which Docker socket to use stated in the section above.
+If \textit{Docker Socket} is used, at least one \textit{Docker network} must be shared among all containers in order to enable status reporting to GameBase. \\
+\gls{tbd}
 
 \section{{\color{blue} Licensing Requirements}}
 {\color{blue} [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]}\\
