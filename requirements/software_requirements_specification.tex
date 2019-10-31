@@ -336,18 +336,39 @@ The application server will be built as a Spring Boot application in Kotlin. Spr
 
 The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 
-\subsection{{\color{magenta} Development tools}}
-{\color{magenta}
+\subsection{Development tools and libraries}
+To make development efficient, we're using the following tools:
+
+\subsection*{Organization}
 \begin{itemize}
-    \item Git: version control system
-    \item GitLab: version control remote server
-    \item JetBrains IntelliJ: Spring MVC backend development
-    \item JetBrains WebStorm: React JS frontend development
-    \item Maven: Build management
-    \item YouTrack: Project planning tool
-    \item Teamcity: Continous integration service
+	\item \textbf{Git}: Version control system
+	\item \textbf{GitLab}: Version control remote server
+    \item \textbf{YouTrack}: Project planning tool with time tracking.
+	\item \textbf{TeamCity}: Continuous integration service	
 \end{itemize}
-}
+
+\subsection*{Frontend}
+\begin{itemize}
+    \item \textbf{JetBrains WebStorm}: Angular frontend development
+	\item \textbf{NPM}: Node.js package manager
+	\item \textbf{Protractor}: Integration tests of website
+	\item \textbf{Karma}: Unit testing
+\end{itemize}
+
+\subsection*{Backend}
+\begin{itemize}
+	\item \textbf{JetBrains IntelliJ}: Spring backend development
+	\item \textbf{JetBrains GoLand}: GoLang backend development
+	\item \textbf{Gradle}: Build management
+\end{itemize}
+
+\subsection*{Code quality}
+\begin{itemize}
+	\item \textbf{IDE Formatter}: Appopriate formatting for compliance of coding guidelines. (\textit{Note}: Usage of formatter might not always apply.)
+	\item \textbf{CheckStyle}: Code style check before commiting
+	\item \textbf{FindBugs}: Analyse common Java/Kotlin bugs 
+	(\textit{Note}: Usage of plugin is subject to change.)
+\end{itemize}
 
 \section{{\color{blue} On-line User Documentation and Help System Requirements}}
 {\color{blue} [Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.]}\\
