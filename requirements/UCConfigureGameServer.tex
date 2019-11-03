@@ -14,6 +14,28 @@
 \usepackage{tabu}
 % KOMA-Script Mods für float,hyperref,listings,setspace
 \RequirePackage{scrhack}
+\usepackage{listings}
+
+\lstdefinelanguage{Gherkin}{
+	morekeywords = {
+		Given,
+		When,
+		Then,
+		And,
+		Scenario,
+		Feature,
+		But,
+		Background,
+		Scenario Outline,
+		Examples
+	},
+	sensitive=true,
+	morecomment=[l]{\#},
+	morestring=[b]",
+	morestring=[b]',
+	keywordstyle=\normalsize\bfseries\color{green},
+	basicstyle=\small\ttfamily,
+}
 
 \setlength{\parindent}{0pt}
 
@@ -51,6 +73,28 @@ The use case describes the configuration of gameservers
     \item User clicks on <<Save>> to save the edits and gets redirected to the gameservers detail page
     \item or the User clicks on <<Cancel>> to cancel the update operation and gets redirected to the gameservers detail page
 \end{itemize}
+
+
+\section{.feature File}
+\begin{lstlisting}[language=Gherkin]
+Feature: Configure game server
+    Scenario: User changes the configuration and confirms the changes
+    Given I am on the detail page for the game server
+    And I click on the "Edit" button
+    When I fill the form with the required information
+    And I click on the "Save" button
+    Then the game server is reconfigured
+    And I am redirected to the detail page for the game server
+    
+    Scenario: User cancels changing the configuration
+    Given I am on the detail page for the game server
+    And I click on the "Edit" button
+    When I may or may not fill the form with the required information
+    And I click the "Cancel" button
+    Then the game server is not reconfigured
+    And I am redirected to the detail page for the game server
+\end{lstlisting}
+
 
 \section{Configuration}
 [include image]\\

@@ -14,6 +14,28 @@
 \usepackage{tabu}
 % KOMA-Script Mods für float,hyperref,listings,setspace
 \RequirePackage{scrhack}
+\usepackage{listings}
+
+\lstdefinelanguage{Gherkin}{
+	morekeywords = {
+		Given,
+		When,
+		Then,
+		And,
+		Scenario,
+		Feature,
+		But,
+		Background,
+		Scenario Outline,
+		Examples
+	},
+	sensitive=true,
+	morecomment=[l]{\#},
+	morestring=[b]",
+	morestring=[b]',
+	keywordstyle=\normalsize\bfseries\color{green},
+	basicstyle=\small\ttfamily,
+}
 
 \setlength{\parindent}{0pt}
 
@@ -49,6 +71,28 @@ The use case describes the creation of gameservers
     \item User clicks on <<Create>> to create the GameServer and gets redirected to the gameservers configuration page
     \item or the User clicks on <<Cancel>> to cancel the Create operation
 \end{itemize}
+
+
+\section{.feature File}
+\begin{lstlisting}[language=Gherkin]
+Feature: Create game server
+    Scenario: User creates a game server
+    Given I am on the dashboard page
+    And I click on the "Create game server" button
+    When I fill the form with the required information
+    And I click on the "Create" button
+    Then the game server is created
+    And I am redirected to the configuration page for the game server
+    
+    Scenario: User cancels creation of a game server
+    Given I am on the dashboard page
+    And I click on the "Create game server" button
+    When I may or may not fill the form with the required information
+    And I click the "Cancel" button
+    Then the game server is not created
+    And I stay on the dashboard page
+\end{lstlisting}
+
 
 \section{Creation}
 [include image]\\
