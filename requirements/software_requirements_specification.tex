@@ -23,11 +23,13 @@
     urlcolor=cyan,
 }
 % Glossareinträge nach hyperref
-\RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
+% \RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
 
 % Füge andere Abkürzungen
-\input{srs_abbr.tex}
-\makeglossaries
+% \input{srs_abbr.tex}
+% \makeglossaries
+% As our Docker image does not support glossaries, this is our workaround until fixed:
+\newcommand{\gls}[1]{\uppercase{#1}}
 
 \setlength{\parindent}{0pt}
 
@@ -81,7 +83,22 @@ This software is divided into two obvious components
 \end{itemize}
 
 \section{Definitions, Acronyms and Abbreviations}
-\printabbreviations[title={}]
+%\printabbreviations[title={}]
+\begin{table}[H]
+	\centering
+	\everyrow{\hline}
+	\begin{tabu} to \textwidth {|X[c]|X[c]|}
+		\textbf{Abbreviation} & \textbf{Definition} \\
+		AWS & Amazon Web Services \\
+		DTO & Data Transferable Object \\
+		GCS & Google Cloud Services \\
+		K8S & Kubernetes \\
+		N/A & Not applicable \\
+		STC & Subject to change \\
+		TBD & To be determined
+	\end{tabu}
+	\label{tab:definition-tabview}
+\end{table}
 
 \section{References}
 \begin{table}[H]
