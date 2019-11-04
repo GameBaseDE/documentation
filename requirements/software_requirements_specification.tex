@@ -16,17 +16,24 @@
 \RequirePackage{scrhack}
 % hyperref als letzes
 \RequirePackage{hyperref}
-
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
+% Glossareinträge nach hyperref
+% \RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
+
+% Füge andere Abkürzungen
+% \input{srs_abbr.tex}
+% \makeglossaries
+% As our Docker image does not support glossaries, this is our workaround until fixed:
+\newcommand{\gls}[1]{\uppercase{#1}}
 
 \setlength{\parindent}{0pt}
 
-\begin{document}
+\begin{document}	
 \begin{flushright}
 GameBase
 \\
@@ -42,8 +49,10 @@ Version 1.0
 	\everyrow{\hline}
 	\begin{tabu} to \textwidth {|X[c]|X[c]|X[c]|X[c]|}
 		Date & Version & Description & Author\\
-		23/10/2019 & 0.1 & Added Use Case Diagram & Norman Gehrsitz\\
-		<dd/mmm/yy> & <x.x> & <details> & <name>\\
+		10/23/2019 & 0.1 & Added Use Case Diagram & Norman Gehrsitz \\
+		10/28/2019 & 0.2 & Added Activity Diagram for creating and configuring game server & Leonhard Gahr \\
+		10/xx/2019 & 1.0 & Complete current state of information & Kevin Reis \\
+		% <mm/dd/yyyy> & <x.x> & <details> & <name>\\
 	\end{tabu}
 	\label{tab:rev-hist}
 \end{table}
@@ -63,13 +72,48 @@ The purpose of this document is to give a general description of the GameBase pr
 
 \section{Scope}
 % [A brief description of the software application that the SRS applies to; the feature or other subsystem grouping; what Use-Case model(s) it is associated with;  and anything else that is affected or influenced by this document.]
-This document is designed for internal use only and will outline the development process of the project.
+\subsection*{Target Group}
+We want to offer our software to everyone who wants easy game server management and deployment without heavily modifying their system. It can be also used in an commercial environment like hosting game server services to other people.
+
+\subsection*{Components}
+This software is divided into two obvious components
+\begin{itemize}
+	\item Frontend (End-user server management)
+	\item Backend (Deployment to specified destination, Docker Image creation)
+\end{itemize}
 
 \section{Definitions, Acronyms and Abbreviations}
-{\color{blue} [This subsection should provide the definitions of all terms, acronyms, and abbreviations required to properly interpret the SRS.  This information may be provided by reference to the project Glossary.]}
+%\printabbreviations[title={}]
+\begin{table}[H]
+	\centering
+	\everyrow{\hline}
+	\begin{tabu} to \textwidth {|X[c]|X[c]|}
+		\textbf{Abbreviation} & \textbf{Definition} \\
+		AWS & Amazon Web Services \\
+		DTO & Data Transferable Object \\
+		GCS & Google Cloud Services \\
+		K8S & Kubernetes \\
+		N/A & Not applicable \\
+		STC & Subject to change \\
+		TBD & To be determined
+	\end{tabu}
+	\label{tab:definition-tabview}
+\end{table}
 
 \section{References}
-{\color{blue} [This subsection should provide a complete list of all documents referenced elsewhere in the SRS.  Each document should be identified by title, report number (if applicable), date, and publishing organization.  Specify the sources from which the references can be obtained. This information may be provided by reference to an appendix or to another document.]}
+\begin{table}[H]
+	\centering
+	\everyrow{\hline}
+	\begin{tabu} to \textwidth {|X[c]|X[c]|X[c]|}
+		\textbf{Title} & \textbf{Date} & \textbf{Author} \\
+		\href{https://gitlab.tandashi.de/GameBase}{Git Repository} & 10/23/2019 & GameBase \\
+		\href{https://youtrack.gahr.dev}{YouTrack} & 10/23/2019 & GameBase \\
+		\href{https://gahr.dev}{Blog} & 10/23/2019 & GameBase \\
+		\href{https://www.docker.com/}{Docker} & 10/23/2019 & Docker Inc. \\
+		\href{https://cloud.google.com/}{Google Cloud Services} & 10/31/2019 & Google Ltd. \\
+	\end{tabu}
+	\label{tab:references-tabview}
+\end{table}
 
 \section{Overview}
 % [This subsection should describe what the rest of the SRS contains and explain how the document is organized.]
@@ -86,7 +130,7 @@ The next chapters provide information about our vision based on a use case diagr
 % 	\item assumptions and dependencies
 % 	\item requirements subsets
 % \end{itemize}]
-Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don’t have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
+Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don't have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
 
 With GameBase, we want to make your game server deployment life way easier. Using Docker – a state-of-the-art virtualisation technology – servers can be set up through templates on a website and ready to be deployed with just one click. This also makes sure that every game server is isolated from each other avoiding possible conflicts with each other as well.
 
@@ -97,72 +141,93 @@ With GameBase, we want to make your game server deployment life way easier. Usin
 	\label{fig:ucd}
 \end{figure}
 Players are featured in our diagram even though they are not interacting with our application directly because after all connecting to the servers is a crucial part of our system.
-Administration of the game servers with game specific features like Kicking, Banning and Map Rotations is also out of scope as there are already well polished Tools for this who can work independently from our Platform.
-The main use cases of our application is managing the game server containers.
-As such creation and configuration of severs is the milestone for our first semester, whereas Status reporting, managing server files, enabling network access to the containers network and managing server presets is in scope for the second semester.
+
+Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently. As we want to offer an experience of settings up any kind of game servers.
+
+The main use case of our application is the easy management of game server containers created by Docker. We split up its functionality into two semester.
 
 \chapter{Specific Requirements}
-{\color{blue} [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]}
+% [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]
 
 \section{Functionality - Backend}
-{\color{blue} [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
+% [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
 
-Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]}
+% Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-{\color{magenta}
+The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
+
+\subsection{Server Management and Creation (3rd semester)}
+Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
+\begin{itemize}
+	\item an already built one 
+	\item or be built by \emph{Dockerfile}.
+\end{itemize}
+ 
+ 
+The functionality of management contains:
+\begin{itemize}
+	\item Start, stop and kill server
+	\item Create container
+	\item Configuring server (ports, player slots, RAM usage, ...)
+	\item Select deployment method
+	\item Recreating container (equals reinstallation)
+\end{itemize}
+
+\subsection{Status Reporting (4th semester)}
+For better troubleshooting and further, concise information about a user's container, a status reporting system will be introduced. Example status can be:
+\begin{itemize}
+	\item Building...
+	\item Starting...
+	\item Running
+	\item Stopping...
+	\item Stopped
+\end{itemize}
+
+\subsection{Volume Management (4th semester)}
+The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
+
+\subsection{User System (3rd + 4th semester)}
+At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission system. According use cases are:
+
+\begin{itemize}
+	\item Register
+	\item Log in
+	\item Log out
+	\item Change profile
+	\item Delete profile
+\end{itemize}
+
+As of defined use case scopes, in the 3rd semester, we firstly stick to only one account with Basic authentication.
+
+\subsection{Preset Registry ((3rd +) 4th semester)}
+Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
+
 The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
-}
 
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} Read data given over API endpoints}}
-{\color{magenta}
-For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request and waits for a response from the backend which also answers with JSON.
-}
+\subsection{Read and Parse Data Passed by API Endpoints}
+For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request via an HTTP client and waits for a response from the backend which also answers with JSON.
 
-\subsection{{\color{magenta} Parse data}}
-{\color{magenta}
-For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request and waits for a response from the backend which also answers with JSON.
-}
+It's important to validate input and output data in order to avoid malfunctions or possible abuse of undetected bugs. In case of sharing \gls{dto} files we need to make sure that we have a centralized module which can be added as dependency by any component.
 
-\subsection{{\color{magenta} Provide data}}
-{\color{magenta}
+\subsection{Provide Data}
 After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned DTO objects. In addition, the response contains a HTTP status code even if the request failed so that the frontend knows if it just received data or an error.
-}
 
 \section{Functionality - Frontend}
-{\color{blue} [This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
+%[This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
 
-Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]}
+% Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-{\color{magenta}
 The frontend provides an user interface for the users to interact with and is able to request data from the data backend. The following subsections explain the types of data the frontend can request. Each of the subsections corresponds to one or more use cases.
-}
+
 
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} User system}}
-{\color{magenta}
-At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission-system. According use cases are:
 
-\begin{itemize}
-    \item Register
-    \item Login
-    \item Logout
-    \item Change profile
-    \item Delete profile
-\end{itemize}
-}
-
-\subsection{{\color{magenta} App server system}}
-See use-cases:
-\begin{itemize}
-    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
-    \item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
-\end{itemize}
-{\color{magenta}
+\subsection{Application Server}
 The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using sane default configurations. According use cases are:
 
 \begin{itemize}
@@ -171,21 +236,24 @@ The user interface exposes several highly abstracted options for investigating a
     \item View deployment/container status
     \item View reports/logs/metrics
 \end{itemize}
-}
 
-\section{{\color{magenta} Usability}}
+You can see some use cases here:
+\begin{itemize}
+	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
+	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
+\end{itemize}
+
+\section{Usability}
 % [This section should include all of those requirements that affect usability. For example,
 % \begin{itemize}
 % 	\item specify the required training time for a normal users and a power user to become productive at particular operations
 % 	\item specify measurable task times for typical tasks or base the new system’s usability requirements on other systems that the users know and like
 % 	\item specify requirement to conform to common usability standards, such as IBM’s CUA standards Microsoft’s GUI standards]
 % \end{itemize}
+We will build the user interface intuitive, so that a new user does not necessarily need an explanation or in-depth training, even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
 
-{\color{magenta}
-We will build the user interface intuitive, so that a new user does not necessarily need an explanation. Even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
-}
 
-\section{{\color{magenta} Reliability}}
+\section{Reliability}
 % [Requirements for reliability of the system should be specified here. Some suggestions follow:
 % \begin{itemize}
 % 	\item Availability—specify the percentage of time available ( xx.xx%), hours of use, maintenance access, degraded mode operations, etc.
@@ -195,137 +263,200 @@ We will build the user interface intuitive, so that a new user does not necessar
 % 	\item Maximum Bugs or Defect Rate—usually expressed in terms of bugs per thousand of lines of code (bugs/KLOC) or bugs per function-point( bugs/function-point).
 % 	\item Bugs or Defect Rate—categorized in terms of minor, significant, and critical bugs: the requirement(s) must define what is meant by a “critical” bug; for example, complete loss of data or a complete inability to use certain parts of the system’s functionality.]
 % \end{itemize}
-{\color{magenta}
-In the following we describe the availability, Mean Time Between Failures and Mean Time To Repair, accuracy and bug classes we strive for.
-}
 
 % \subsection{<Reliability Requirement One>}
 % [The requirement description.]
 
-\subsection{{\color{magenta} Availability}}
-{\color{magenta}
-Since we want to provide hosting for our users but also allow them to host the software for themselves or using other providers, we cannot specify this requirement in great detail. Ultimately even the reliability of our own hosting option would be subject to the capabilities of our hosting provider. Due redundancy and other security arrangements, most providers can ensure an uptime of over 99.9\% which equates to approximately 8 hours per year. It is thus reasonable to assume that a sufficiently mature implementation of the software can achieve comparable reliability.
-}
+\subsection{Availability}
+Our software won't be only used personally, but we also think about a commercial usage.
+In case of personal usage, we cannot make any real assessment of availability. But we can have a passive effect on it e. g. by providing bug fixes as soon as possible.
+On commercial usage, availability depends rather on the provider/hoster. Most of the time, most providers advertise with an update of 99.9\%.
 
-\subsection{{\color{magenta} Mean Time Between Failures \& Mean Time To Repair}}
-{\color{magenta}
-If the application fails due an hardware issue, then the mean times are up to our hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, we can revert the code to a previous version that worked fine. This shouldn't take more than one or two hours from the point on we noticed.
-}
+\subsection{Mean Time Between Failures \& Mean Time To Repair}
+If the application fails due an hardware issue, then the mean times are up to one's hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, it is possible to revert to a previous version that has worked fine. However, we need to be careful about backward compatibility issues.
 
-\subsection{{\color{magenta} Accuracy}}
-{\color{magenta}
+\subsection{Accuracy}
 The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our controll. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
-}
 
-\subsection{{\color{magenta} Bug classes}}
-{\color{magenta}
+\subsection{Bug Classes}
 We classify bugs which might appear in the software into either one of these two categories:
 
 \begin{itemize}
-    \item Critical bug: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
-    \item Non-critical bug: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
+    \item {\color{magenta}\textbf{Critical bug}: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
+    	
+    	\emph{Comment: Do we really want to be responsible for data breaches? Wrongly configured database faulty of 3rd person can be a cause too!}
+    }
+    \item \textbf{Non-critical bug}: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
 \end{itemize}
-}
 
-\section{{\color{blue} Performance}}
-{\color{blue} [The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
- \begin{itemize}
- 	\item response time for a transaction (average, maximum)
- 	\item throughput, for example, transactions per second
- 	\item capacity, for example, the number of customers or transactions the system can accommodate
-	\item degradation modes (what is the acceptable mode of operation when the system has been degraded in some manner)
-	\item resource utilization, such as memory, disk, communications, etc.
- \end{itemize}]}
+\section{Performance}
+%[The system’s performance characteristics should be outlined in this section. Include specific response times. Where applicable, reference related Use Cases by name.
+ %\begin{itemize}
+ %	\item response time for a transaction (average, maximum)
+ %	\item throughput, for example, transactions per second
+ %	\item capacity, for example, the number of customers or transactions the system can accommodate
+%	\item degradation modes (what is the acceptable mode of operation when the system has been degraded in some manner)
+%	\item resource utilization, such as memory, disk, communications, etc.
+ %\end{itemize}]
+Performance is a significant aspect for fluent usage and operation.
 
-{\color{magenta}
-In general, we try to keep to user experience fluent and response times low.
-}
+\subsection{Response Time}
+Our users' resources and requirements to our software may vary. This leads to different results which cannot be explicitly predicted or affected by us. A contribution to response can be made by following our guidelines during development and testing.
 
-% \subsection{<Performance Requirement One>}
-% [The requirement description goes here.]
+For instance, by using \emph{GoLang}, its parallelism algorithm should provide a better base of finishing concurrent task faster and safer.
 
-\section{{\color{magenta} Supportability}}
+\subsection{Throughput}
+We don't expect a high volume of data transfer when using our software on personal purpose. If it comes to a bigger environment as in hosting and selling game servers, it's possible to scale our application as it is build with Docker. 
+
+
+\subsection{Capacity}
+By optimizing our Docker builds, we try to keep the size of volume layers as compact as possible. This guarantees faster deployment.
+
+
+\subsection{Degradation Modes}
+The application should under any circumstance maintain links or access to the container after for example the frontend has crashed. It should be able to recover by trying to restart itself. Otherwise the application should try to shutdown any running container associated with GameBase safely and gracefully. 
+
+% \subsection{Resource utilization}
+
+\section{Supportability}
 % [This section indicates any requirements that will enhance the supportability or maintainability of the system being built, including coding standards, naming conventions, class libraries, maintenance access, maintenance utilities.]
-{\color{magenta}
-Our frontend, backend and each functionality will be clearly separated and we try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
-}
+Our frontend and backend will be clearly separated. A benefit is that each component acts independently and thus can be maintained separately without getting in conflicts with other components - unless a breaking change is planned, obviously. We try to stick to naming conventions which are common in the used technologies. We especially value practices which lead to the writing of clean code. By properly documenting code through comments and backing documents we make it easy to understand our infrastructure and increase maintainability.
 
-% \subsection{<Supportability Requirement One>}
-% [The requirement description goes here.]
+\subsection{Coding Guidelines}
+As we use different programming languages, different code styles which are common among these are present. We might try out some tools like \emph{CheckStyle} or internal formatter (JetBrains IDEs) to check code formatting and show warnings if a snippet is not compliant. \\
+
+These are the code conventions we stick to:
+\begin{itemize}
+	\item \textbf{Kotlin}: \href{https://kotlinlang.org/docs/reference/coding-conventions.html}{JetBrains' Coding Convention}
+	\item \textbf{Java}: \href{https://google.github.io/styleguide/javaguide.html}{Google's Java Style Guide}
+	\item \textbf{Go}: \href{https://golang.org/doc/effective_go.html}{Effective Go}
+	\item \textbf{TypeScript}: \href{https://github.com/microsoft/TypeScript/wiki/Coding-guidelines}{Microsoft's TypeScript coding guidelines}
+	\item \textbf{TypeScript/Angular}: \href{https://angular.io/guide/styleguide}{Angular Style Guide}
+\end{itemize}
+
+\subsection{Quality Assurance}
+\label{sec:support_qa}
+We want to develop quality software. As a measurement, unit, integration tests and a basic concept are quintessential. We integrate these steps in three levels:
+\begin{itemize}
+	\item \textbf{Upon concept}: Before starting developing, the person who just assigned themselves an issue needs to create a concept for solving the problem first. This doesn't have to be very explicitly detailed, but at least show the kind of tools or approaches you're trying to use to combat the problem. Afterwards, the concept is reviewed by another team member, ideally in form of peer reviews.
+	\item \textbf{After development}: After a contributor has finished developing, a second reviews takes place. The reviewee should at least run the tests written by the contributor on either of their workstations and check the pipeline for positive outcomes. If both agree on what they have discussed, the changes are merged.
+	\item \textbf{CI/CD}: During development process, we test bleeding edge code in CI bots. Those run unit and integration tests. Additionally, \emph{SonarQube} can be used in order to detect common coding mistakes or code smells. The developer decides whether to fix them or not, but also has to make sure that a certain threshold for declining the build is not reached.
+\end{itemize}
 
 \section{Design Constraints}
 % [This section should indicate any design constraints on the system being built. Design constraints represent design decisions that have been mandated and must be adhered to.  Examples include software languages, software process requirements, prescribed use of developmental tools, architectural and design constraints, purchased components, class libraries, etc.]
 
-% \subsection{<Design Constraint One>}
-% [The requirement description goes here.]
- 
-\subsection{{\color{magenta} Usage of Software languages and frameworks}}
-{\color{magenta}
-For the clientsided frontend we will use a mix of HTML, CSS, JavaScript and the ReactJS Framework. ReactJS helps building interactive UIs that can be updated dynamically and therefore eliminate the need to refresh the web application. One can also develop single components and can reuse them all over the application. Such a component could be a login form, a profile card or anything else one wants to reuse. We are going to import a React framework called Material-UI that provides a lot of pre-defined components based on the Material Design Specification. The development will take place with the newest version of JavaScript. Fortunately, our development environment is able to compile it to the lower version of JavaScript. Thus, we can use the newest features without having to worry about browser compatibility. Furthermore we will extend ReactJS with Redux. Redux allows us to keep track of state changes in the frontend and is able to notify other components about it.
+\subsection{Usage of Software Languages and Frameworks}
+For the frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It updates content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and reuse them all over the application. An example component could be a login form, a profile card or dashboard widgets. Aside from that, if we need any kind of \gls{dto}s that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple \gls{dto}s into TypeScript classes. \\
 
-The application server will be built as a Spring Boot application in Java. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. In our case, a REST Web Service which represents the interface between our front- and backend. As we want to benefit from the newest features of Java 13, the platform this service will be hosted on needs to support Java 13 or higher.
+The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approaches in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all required beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Due to Spring Boot's embedded Tomcat instance deploying our application is very easy. It is run upon start of built .jar file thus no Tomcat Server has to be set up. That allows us deploying it in Docker too. \\
 
-The container server in the backend will use the docker api module which is available in Go. Go claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
-}
+The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
 
-\subsection{{\color{magenta} Development tools}}
-{\color{magenta}
+\subsection{Development Tools and Libraries}
+To make development efficient, we're using the following tools:
+
+\subsection*{Organization}
 \begin{itemize}
-    \item Git: version control system
-    \item GitLab: version control remote server
-    \item JetBrains IntelliJ: Spring MVC backend development
-    \item JetBrains WebStorm: React JS frontend development
-    \item Maven: Build management
-    \item YouTrack: Project planning tool
-    \item Teamcity: Continous integration service
+	\item \textbf{Git}: Version control system
+	\item \textbf{GitLab}: Version control remote server
+    \item \textbf{YouTrack}: Project planning tool with time tracking.
+	\item \textbf{TeamCity}: Continuous integration service	
 \end{itemize}
-}
 
-\section{{\color{blue} On-line User Documentation and Help System Requirements}}
-{\color{blue} [Describes the requirements, if any, for on-line user documentation, help systems, help about notices, etc.]}\\
+\subsection*{Frontend}
+\begin{itemize}
+    \item \textbf{JetBrains WebStorm}: Angular frontend development
+	\item \textbf{NPM}: Node.js package manager
+	\item \textbf{Protractor}: Integration tests of website
+	\item \textbf{Karma}: Unit testing
+\end{itemize}
 
-[to be determined]
+\subsection*{Backend}
+\begin{itemize}
+	\item \textbf{JetBrains IntelliJ}: Spring backend development
+	\item \textbf{JetBrains GoLand}: GoLang backend development
+	\item \textbf{Gradle}: Build management
+\end{itemize}
+
+\subsection*{Code Quality}
+\begin{itemize}
+	\item \textbf{IDE Formatter}: Appopriate formatting for compliance of coding guidelines. (\textit{Note}: Usage of formatter might not always apply.)
+	\item \textbf{CheckStyle}: Code style check before commiting
+	\item \textbf{FindBugs}: Analyse common Java/Kotlin bugs 
+	(\textit{Note}: Usage of plugin is subject to change.)
+\end{itemize}
+
+\section{Online User Documentation and Help System Requirements}
+\begin{itemize}
+	\item \textbf{JavaDoc}: Official documentation of Java/Kotlin code
+	\item \textbf{Swagger}: Automatic documentation creation for REST APIs
+\end{itemize}
+
+\gls{stc}
 
 \section{Purchased Components}
 % [This section describes any purchased components to be used with the system, any applicable licensing or usage restrictions, and any associated compatibility and interoperability or interface standards.]
-[not applicable]
+\gls{na}
 
-\section{{\color{blue} Interfaces}}
-{\color{blue} [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]}\\
+\section{Interfaces}
+% [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]
+Interfaces for production release are \gls{tbd}.
 
-[to be determined]
-
-\subsection{{\color{blue} User Interfaces}}
+\subsection{User Interfaces}
 % [Describe the user interfaces that are to be implemented by the software.]
-[to be determined]
+To ensure that the user can interact with our system, we need to implement (at least) these interface items:
+\begin{itemize}
+	\item Angular web frontend
+	\item Creation and control of containers
+	\item Container status reporting
+	\item Creation of custom images
+	\item Attachment to container console
+	\item Server files management
+	\item Deployment method selection
+	\item User management system
+	\item Update reminder
+\end{itemize}
 
 \subsection{Hardware Interfaces}
 % [This section defines any hardware interfaces that are to be supported by the software, including logical structure, physical addresses, expected behavior, etc. ]
-[not applicable]
+We cannot make precise interface requirements for our software. The reason for this is that we want to develop our software that functions as a distributed environment.
+\begin{itemize}
+	\item \textbf{OS}: Should be supported by any OS that fulfill \href{https://www.docker.com/}{requirements of using Docker}.
+	\item \textbf{Orchestration systems/providers}: Local backend, \gls{k8s}, \gls{aws}, \gls{gcs}
+\end{itemize}
+\gls{tbd}
 
 \subsection{Software Interfaces}
 % [This section describes software interfaces to other components of the software system. These may be purchased components, components reused from another application or components being developed for subsystems outside of the scope of this SRS but with which this software application must interact.]
-[described in "Design constraints"]
-% FIXME: use autoref
+A huge requirement/major dependency is access to host system's Docker. This can be resolved with either:
+\begin{itemize}
+	\item Docker Socket (For Linux: unix:///var/run/docker.sock)
+	\item Docker-in-docker* (Requires privileged container environment)
+\end{itemize}
+\gls{tbd}
 
 \subsection{Communications Interfaces}
 % [Describe any communications interfaces to other systems or devices such as local area networks, remote serial devices, etc.]
-[not applicable]
+This depends on the decision of which Docker socket to use stated in the section above.
+If \textit{Docker Socket} is used, at least one \textit{Docker network} must be shared among all containers in order to enable status reporting to GameBase. \\
+\gls{tbd}
 
-\section{{\color{blue} Licensing Requirements}}
-{\color{blue} [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]}\\
+\section{Licensing Requirements}
+% [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]
+We still discuss which license to use that is appropriate for us.\\
+\gls{tbd}
 
-[to be determined]
+\section{Legal, Copyright, and Other Notices}
+% [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]
+GameBase is not responsible for any kind of damage that is done when using our software. 
+\gls{tbd}
 
-\section{{\color{blue} Legal, Copyright, and Other Notices}}
-{\color{blue} [This section describes any necessary legal disclaimers, warranties, copyright notices, patent notice, wordmark, trademark, or logo compliance issues for the software.]}\\
+\section{Applicable Standards}
+% [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]
+In terms of code standard, please read section \ref{sec:support_qa}. \\
 
-[to be determined]
-
-\section{{\color{blue} Applicable Standards}}
-{\color{blue} [This section describes by reference any applicable standard and the specific sections of any such standards which apply to the system being described. For example, this could include legal, quality and regulatory standards, industry standards for usability, interoperability, internationalization, operating system compliance, etc.]}\\
-
-[to be determined]
+\gls{tbd}
 
 \chapter{Supporting Information}
 % [The supporting information makes the SRS easier to use.  It includes:
@@ -335,6 +466,13 @@ The container server in the backend will use the docker api module which is avai
 % 	\item Appendices
 % \end{itemize}
 % These may include use-case storyboards or user-interface prototypes. When appendices are included, the SRS should explicitly state whether or not the appendices are to be considered part of the requirements.]
-[not applicable]
+If you want to reach out to use, feel free to write us an e-mail:
+\begin{itemize}
+	\item \href{mailto:gahr.leonhard@student.dhbw-karlsruhe.de}{Leonhard Gahr}
+	\item \href{mailto:gehrsitz.norman@student.dhbw-karlsruhe.de}{Norman Gehrsitz}
+	\item \href{mailto:lukas.stefan@student.dhbw-karlsruhe.de}{Stefan Lukas}
+	\item \href{mailto:reis.kevin@student.dhbw-karlsruhe.de}{Kevin Reis}
+\end{itemize}
 
+Otherwise, take a look at section \ref{tab:references-tabview} for other possibilities to reach us out.
 \end{document}
