@@ -1,6 +1,8 @@
 compile-pdf:
   stage: build
-  image: dregistry.gahr.dev/texlive:latest
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  image: $CI_REGISTRY/texlive:latest
   script:
     - cd requirements
     - arara -h
