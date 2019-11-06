@@ -1,13 +1,9 @@
-# This file is a template, and might need editing before it works on your project.
-# use docker image with latex preinstalled
-# since there is no official latex image, use https://github.com/blang/latex-docker
-# possible alternative: https://github.com/natlownes/docker-latex
 compile-pdf:
   stage: build
-  image: blang/latex
+  image: dregistry.gahr.dev/texlive:latest
   script:
     - cd requirements
-    - latexmk -lualatex -pdf
+    - arara -h
   artifacts:
     paths:
       - "requirements/*.pdf"
