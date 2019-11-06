@@ -8,7 +8,6 @@ compile-pdf:
     - |+
       for texfile in *.tex
       do
-        echo $texfile
         arara -l $texfile
       done
   artifacts:
