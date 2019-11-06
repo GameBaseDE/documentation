@@ -1,6 +1,8 @@
 compile-pdf:
   stage: build
   image: $CI_REGISTRY/texlive:latest
+  tags:
+    - GameBase
   script:
     - cd requirements
     - arara -h
@@ -10,6 +12,8 @@ compile-pdf:
 
 pages:
   stage: deploy
+  tags:
+    - GameBase
   script:
     - mkdir public
     - cp requirements/*.pdf public
