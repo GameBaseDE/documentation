@@ -5,11 +5,10 @@ compile-pdf:
     - GameBase
   script:
     - cd requirements
-    - for texfile in *.tex
-    - do
-    - echo $texfile
-    - arara -l $texfile
-    - done
+    - for texfile in *.tex ; do
+        echo $texfile
+        arara -l $texfile
+      done
   artifacts:
     paths:
       - "requirements/*.pdf"
