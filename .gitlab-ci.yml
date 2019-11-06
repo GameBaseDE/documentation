@@ -12,6 +12,7 @@ compile-pdf:
       done
   artifacts:
     paths:
+      - "requirements/*.log"
       - "requirements/*.pdf"
 
 pages:
