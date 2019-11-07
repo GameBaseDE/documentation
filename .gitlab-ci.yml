@@ -9,7 +9,7 @@ compile-pdf:
       for texfile in *.tex
       do
         arara -l $texfile
-        mv arara.log $texfile.arara.log
+        mv arara.log ${texfile%.*}.arara.log
       done
   artifacts:
     paths:
