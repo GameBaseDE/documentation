@@ -6,7 +6,7 @@ package "Application Server" as ApplicationServer {
     WebApp - Mgt
     database "Container Registry" as ContainerRegistry
     database "Persistent Storage" as PersistentStorage {
-        folder "Container #n Volume" as ContainerVolume {
+        folder "Container #k Volume" as ContainerVolume {
             [Game Server Files]
         }
     }
@@ -17,8 +17,8 @@ package "Container Cluster #n" as ContainerCluster  {
         [Docker Orchestration] as OrchHost
     }
 
-    package "Container Host #n" as ContainerHost {
-        package "Container #n" as Container {
+    package "Container Host #m" as ContainerHost {
+        package "Container #k" as Container {
             [Statistics and Reporting] as StatsAnReport
             [Game Server] as GameServer
         }
