@@ -2,21 +2,7 @@
 % arara: lualatex: { interaction: nonstopmode, synctex: no }
 \documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,]{scrreprt}
 
-% Benannte Farben
-\usepackage{xcolor}
-% Schriftauswahl
-\usepackage{fontspec}
-% Spracheinstellungen
-\usepackage[english]{babel}
-% Grafiken einfügen
-\usepackage{graphicx}
-% [H] Platzierung
-\usepackage{float}
-% Tabellen
-\usepackage{tabu}
-% KOMA-Script Mods für float,hyperref,listings,setspace
-\RequirePackage{scrhack}
-\usepackage{listings}
+\usepackage{latex-style}
 
 \lstdefinelanguage{Gherkin}{
 	morekeywords = {
