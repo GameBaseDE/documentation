@@ -1,0 +1,34 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{latex-style}[2019/11/13 latex-style]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Imports
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Spracheinstellungen
+\RequirePackage[english]{babel}
+% [H] Platzierung
+\RequirePackage{float}
+% Schriftauswahl 
+\RequirePackage{fontspec}
+% Textboxen
+\RequirePackage[listings,breakable]{tcolorbox}
+% Benannte Farben
+\RequirePackage{xcolor}
+% Grafiken einfügen
+\RequirePackage{graphicx}
+% Tabellen
+\RequirePackage{tabu}
+% KOMA-Script Mods für float,hyperref,listings,setspace
+\RequirePackage{scrhack}
+% hyperref als letzes
+\RequirePackage{hyperref}
+% Glossareinträge nach hyperref
+\RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Glosareinstellungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Abkürzungsstil
+\setabbreviationstyle{long-short}

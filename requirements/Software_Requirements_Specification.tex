@@ -1,39 +1,29 @@
 % arara: lualatex: { interaction: nonstopmode, synctex: no }
+% arara: makeglossaries
+% arara: lualatex: { interaction: nonstopmode, synctex: no }
 % arara: lualatex: { interaction: nonstopmode, synctex: no }
 \documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,]{scrreprt}
 
-% Benannte Farben
-\usepackage{xcolor}
-% Schriftauswahl
-\usepackage{fontspec}
-% Spracheinstellungen
-\usepackage[english]{babel}
-% Grafiken einfügen
-\usepackage{graphicx}
-% [H] Platzierung
-\usepackage{float}
-% Tabellen
-\usepackage{tabu}
-% KOMA-Script Mods für float,hyperref,listings,setspace
-\RequirePackage{scrhack}
-% hyperref als letzes
-\RequirePackage{hyperref}
+\usepackage{latex-style}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Linkeinstellungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
-% Glossareinträge nach hyperref
-% \RequirePackage[toc, style=altlist, nonumberlist, abbreviations, xindy]{glossaries-extra}
-
-% Füge andere Abkürzungen
-% \input{srs_abbr.tex}
-% \makeglossaries
-% As our Docker image does not support glossaries, this is our workaround until fixed:
-\newcommand{\gls}[1]{\uppercase{#1}}
 
 \setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{SRS_Abbreviations}
+
+\makeglossaries
 
 \begin{document}	
 \begin{flushright}
@@ -85,22 +75,7 @@ This software is divided into two obvious components
 \end{itemize}
 
 \section{Definitions, Acronyms and Abbreviations}
-%\printabbreviations[title={}]
-\begin{table}[H]
-	\centering
-	\everyrow{\hline}
-	\begin{tabu} to \textwidth {|X[c]|X[c]|}
-		\textbf{Abbreviation} & \textbf{Definition} \\
-		AWS & Amazon Web Services \\
-		DTO & Data Transferable Object \\
-		GCS & Google Cloud Services \\
-		K8S & Kubernetes \\
-		N/A & Not applicable \\
-		STC & Subject to change \\
-		TBD & To be determined
-	\end{tabu}
-	\label{tab:definition-tabview}
-\end{table}
+\printabbreviations[title={}]
 
 \section{References}
 \begin{table}[H]
@@ -138,7 +113,7 @@ With GameBase, we want to make your game server deployment life way easier. Usin
 
 \section{Product perspective}
 \begin{figure}
-	\includegraphics[width=\textwidth]{Use_Case_Diagramm.png}
+	\includegraphics[width=\textwidth]{diagramms/Use_Case_Diagramm.png}
 	\caption{Use Case Diagramm}
 	\label{fig:ucd}
 \end{figure}
