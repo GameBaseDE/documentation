@@ -2,21 +2,7 @@
 % arara: lualatex: { interaction: nonstopmode, synctex: no }
 \documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,book]{scrreprt}
 
-% Benannte Farben
-\usepackage{xcolor}
-% Schriftauswahl
-\usepackage{fontspec}
-% Spracheinstellungen
-\usepackage[english]{babel}
-% Grafiken einfügen
-\usepackage{graphicx}
-% [H] Platzierung
-\usepackage{float}
-% Tabellen
-\usepackage{tabu}
-% KOMA-Script Mods für float,hyperref,listings,setspace
-\RequirePackage{scrhack}
-\usepackage{listings}
+\usepackage{latex-style}
 
 \lstdefinelanguage{Gherkin}{
 	morekeywords = {
@@ -61,7 +47,7 @@ The use case describes the creation of gameservers
 
 \chapter{Flow of Events}
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{CreateGameserverActivityDiagramm.png}
+	\includegraphics[width=\textwidth]{diagramms/CreateGameserverActivityDiagramm.png}
 	\caption{Activity Diagramm}
 	\label{fig:ucd}
 \end{figure}
@@ -76,7 +62,7 @@ The use case describes the creation of gameservers
 
 
 \section{.feature File}
-\lstinputlisting[language=Gherkin]{../features/createGameServer.feature}
+\lstinputlisting[language=Gherkin]{features/createGameServer.feature}
 
 
 \section{Creation}
