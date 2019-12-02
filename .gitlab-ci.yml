@@ -2,7 +2,7 @@ compile-pdf:
   stage: build
   image: $CI_REGISTRY/texlive:latest
   tags:
-    - GameBase
+    - docker
   script:
     - cd requirements
     - |+
