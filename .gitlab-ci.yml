@@ -18,6 +18,11 @@ compile-pdf:
 
 pages:
   stage: deploy
+  cache:
+    key: pages
+    paths:
+      - public
+    policy: pull-push
   tags:
     - GameBase
   script:
@@ -33,6 +38,11 @@ pages:
     
 pages:
   stage: deploy
+  cache:
+    key: pages
+    paths:
+      - public
+    policy: pull-push
   tags:
     - GameBase
   script:
