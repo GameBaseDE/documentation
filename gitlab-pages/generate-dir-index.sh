@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OUTPUT="index.html"
-echo "<html><head><title>Code coverage reports</title><link rel='stylesheet' href='styles.css'></head><body>" > $OUTPUT
+echo "<html><head><title>Code coverage reports</title><link rel='stylesheet' href='style.css'></head><body>" > $OUTPUT
 
 echo "<ul>" >> $OUTPUT
 for filepath in $(find . -maxdepth 1 -mindepth 1 -type d| sort); do
