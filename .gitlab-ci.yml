@@ -36,8 +36,7 @@ pages:
   tags:
     - GameBase
   script:
-    - mkdir public
-    - mkdir dev
+    - mkdir -p public/dev
     - cp requirements/*.pdf public/dev
     - cd public/dev
     - find * | while read -r line; do echo "<a href=\"$line\">$line</a><br />"; done >> index.html
