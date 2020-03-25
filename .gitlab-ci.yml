@@ -30,7 +30,7 @@ pages:
     - if [ "$CI_COMMIT_REF_SLUG" == "master" ]; then cp requirements/*.pdf public; else cp requirements/*.pdf public/$CI_COMMIT_REF_SLUG; fi
     - cd public
     - sh ../gitlab-pages/generate-dir-index.sh
-    - cp ../gitlab-pages/styles.css .
+    - cp ../gitlab-pages/style.css .
   artifacts:
     paths: 
       - public
