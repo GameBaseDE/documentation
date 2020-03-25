@@ -26,32 +26,11 @@ pages:
   tags:
     - GameBase
   script:
-    - mkdir public
-    - cp requirements/*.pdf public
+    - if [ "$CI_COMMIT_REF_SLUG" == "master" ]; then mkdir public; else mkdir -p public/$CI_COMMIT_REF_SLUG; fi
+    - if [ "$CI_COMMIT_REF_SLUG" == "master" ]; then cp requirements/*.pdf public; else cp requirements/*.pdf public/$CI_COMMIT_REF_SLUG; fi
     - cd public
-    - find * | while read -r line; do echo "<a href=\"$line\">$line</a><br />"; done >> index.html
+    - sh ../gitlab-pages/generate-dir-index.sh
+    - cp ../gitlab-pages/style.css .
   artifacts:
     paths: 
       - public
-  only:
-    - master
-    
-pages:
-  stage: deploy
-  cache:
-    key: pages
-    paths:
-      - public
-    policy: pull-push
-  tags:
-    - GameBase
-  script:
-    - mkdir -p public/dev
-    - cp requirements/*.pdf public/dev
-    - cd public/dev
-    - find * | while read -r line; do echo "<a href=\"$line\">$line</a><br />"; done >> index.html
-  artifacts:
-    paths: 
-      - public
-  except:
-    - master
