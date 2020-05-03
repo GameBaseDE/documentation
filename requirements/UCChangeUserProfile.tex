@@ -1,0 +1,80 @@
+% arara: lualatex: { interaction: nonstopmode, synctex: no }
+% arara: lualatex: { interaction: nonstopmode, synctex: no }
+\documentclass[a4paper,12pt,chapterprefix=false,bibliography=totoc,listof=totoc,book]{scrreprt}
+
+\usepackage{latex-style}
+
+\lstdefinelanguage{Gherkin}{
+    morekeywords = {
+        Given,
+        When,
+        Then,
+        And,
+        Scenario,
+        Feature,
+        But,
+        Background,
+        Scenario Outline,
+        Examples
+    },
+    sensitive=true,
+    morecomment=[l]{\#},
+    morestring=[b]",
+    morestring=[b]',
+    keywordstyle=\normalsize\bfseries\color{green},
+    basicstyle=\small\ttfamily,
+}
+
+\setlength{\parindent}{0pt}
+\newabbreviation{na}{N/A}{Not applicable}
+
+\begin{document}
+    \begin{flushright}
+        GameBase
+        \\
+        Use-Case Specification: Change User Profile
+% \\
+% For <Subsystem or Feature>
+        \bigbreak
+        Version 1.0
+    \end{flushright}
+
+    \tableofcontents
+
+    \chapter{Use-Case: Change User Profile}
+
+    \section{Brief Description}
+    The use case describes the how existing users can change their user profile.
+
+    \chapter{Flow of Events}
+    \begin{figure}[H]
+        \includegraphics{diagramms/UCChangeUserProfileDiagramm.png}
+        \caption{Activity Diagramm}
+        \label{fig:ucd}
+    \end{figure}
+    \section{Basic flow}
+
+    \begin{itemize}
+        \item User clicks on <<Change Profile>>
+        \item User is redirected to the profile page
+        \item User changes their profile and click <<Submit>>
+        \item User is shown an error/success message
+    \end{itemize}
+
+    \section{.feature File}
+    \gls{na}
+
+    \section{Imagery}
+    [include image here]
+
+    \chapter{Special Requirements}
+    \section{Owning an account}
+    The user has to be a registered user for our system.
+
+    \chapter{Preconditions}
+    \section{Must be logged in}
+    The user must be logged in to change their profile.
+
+    \chapter{Postconditions}
+    \gls{na}
+\end{document}
