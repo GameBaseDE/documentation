@@ -15,7 +15,7 @@ for filepath in $(find . -maxdepth 1 -mindepth 1 -type d| sort); do
 
   for i in $(find "$filepath" -maxdepth 1 -mindepth 1 -type f -name "*.pdf"| sort); do
     file=`basename "$i"`
-    echo "  <li><a href=\"/$path/$file\">$file</a></li>" >> $OUTPUT
+    echo "  <li><a href=\"$path/$file\">$file</a></li>" >> $OUTPUT
   done
 
   echo "</ul></li>" >> $OUTPUT
