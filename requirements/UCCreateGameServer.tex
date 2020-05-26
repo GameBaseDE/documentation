@@ -67,17 +67,6 @@ The use case describes the creation of gameservers
 \end{minipage}
 
 \section{Creation}
-\begin{figure}
-	\includegraphics[width=\textwidth]{diagramms/UCCreateGameServerMockup.jpg}
-	\caption{Mockup of game server creation wizard}
-	\label{fig:mockup}
-\end{figure}
-The creation wizard is separated into two parts: General Details and Resource Allocation \& Container Settings.
-
-In General Details, the user sets a server name, the owner and a short description which will be displayed later on the user's dashboard. When typing in some letters in the server owner field, a suggestion box will popup which the user can use in order to set the desired server owner.
-
-In Resource Allocation \& Container Settings, the user will be asked to select the type (game) of the game server in form of a Docker image. In addition, the user must allocate ports and memory for the game server. This is especially required when e. g. creating a Minecraft server. If any additional startup arguments are needed, the user can set them in the box "Startup Arguments". As a last option, the user can choose how the restart behaviour of the container should be.
-
 If the user finishes filling out the form, they can simply click on "Create Game Server" and a server will be created and deployed.
 
 \chapter{Special Requirements}
