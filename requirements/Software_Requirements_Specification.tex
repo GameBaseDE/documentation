@@ -252,19 +252,16 @@ In case of personal usage, we cannot make any real assessment of availability. B
 On commercial usage, availability depends rather on the provider/hoster. Most of the time, most providers advertise with an update of 99.9\%.
 
 \subsection{Mean Time Between Failures \& Mean Time To Repair}
-If the application fails due an hardware issue, then the mean times are up to one's hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, it is possible to revert to a previous version that has worked fine. However, we need to be careful about backward compatibility issues.
+If the application fails due an hardware issue, then the mean times are up to one's hosting provider. Since the ensured uptime of most hosting providers is 99.9\%, they try to fix the issue within a few minutes. However, if the application fails due a bug in our code, it is possible to revert to a previous version that has worked fine. This means we need to be careful about backward compatibility issues.
 
 \subsection{Accuracy}
-The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our controll. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
+The status data which is displayed to users should be as close to realtime as possible. This is because the software has to interact with live systems and we want our users to be capable of making relevant decisions at all times. The fulfillment of this requirement is likely to depend on the individual hosting solution of our users and in this case outside of our control. Otherwise we should be able to ensure this by preferring both fast and efficient implementations and consequently, algorithms.
 
 \subsection{Bug Classes}
 We classify bugs which might appear in the software into either one of these two categories:
 
 \begin{itemize}
-    \item {\color{magenta}\textbf{Critical bug}: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
-    	
-    	\emph{Comment: Do we really want to be responsible for data breaches? Wrongly configured database faulty of 3rd person can be a cause too!}
-    }
+    \item \textbf{Critical bug}: A critical bug occurs when the users are not able to use the application at all. A data breach or other condition where data that is supposed to be secret becomes publicly accessible is also considered a critical bug.
     \item \textbf{Non-critical bug}: A non-critical bug appears when the user can use the application but it appears glitched but the user experience is just slightly impacted. Crucially, bugs in this category have minimal impact on the use cases as outlined in this specification.
 \end{itemize}
 
