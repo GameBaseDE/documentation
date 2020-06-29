@@ -303,8 +303,6 @@ As we use different programming languages, different code styles which are commo
 
 These are the code conventions we stick to:
 \begin{itemize}
-	\item \textbf{Kotlin}: \href{https://kotlinlang.org/docs/reference/coding-conventions.html}{JetBrains' Coding Convention}
-	\item \textbf{Java}: \href{https://google.github.io/styleguide/javaguide.html}{Google's Java Style Guide}
 	\item \textbf{Go}: \href{https://golang.org/doc/effective_go.html}{Effective Go}
 	\item \textbf{TypeScript}: \href{https://github.com/microsoft/TypeScript/wiki/Coding-guidelines}{Microsoft's TypeScript coding guidelines}
 	\item \textbf{TypeScript/Angular}: \href{https://angular.io/guide/styleguide}{Angular Style Guide}
@@ -312,11 +310,11 @@ These are the code conventions we stick to:
 
 \subsection{Quality Assurance}
 \label{sec:support_qa}
-We want to develop quality software. As a measurement, unit, integration tests and a basic concept are quintessential. We integrate these steps in three levels:
+We want to develop quality software. As a measurement, unit/integration tests and a basic concept are quintessential. We integrate these steps in three levels:
 \begin{itemize}
-	\item \textbf{Upon concept}: Before starting developing, the person who just assigned themselves an issue needs to create a concept for solving the problem first. This doesn't have to be very explicitly detailed, but at least show the kind of tools or approaches you're trying to use to combat the problem. Afterwards, the concept is reviewed by another team member, ideally in form of peer reviews.
+	\item \textbf{Upon concept}: Before starting developing, the person who just assigned themselves an issue needs to create a concept for solving the problem first. This doesn't have to be very explicitly detailed, but at least show the kind of tools or approaches you're trying to use to combat the problem. Afterwards, the concept is reviewed by another team member, ideally in form of peer reviews. If both agree to the changes to be made, the assignee can continue with development.
 	\item \textbf{After development}: After a contributor has finished developing, a second reviews takes place. The reviewee should at least run the tests written by the contributor on either of their workstations and check the pipeline for positive outcomes. If both agree on what they have discussed, the changes are merged.
-	\item \textbf{CI/CD}: During development process, we test bleeding edge code in CI bots. Those run unit and integration tests. Additionally, \emph{SonarQube} can be used in order to detect common coding mistakes or code smells. The developer decides whether to fix them or not, but also has to make sure that a certain threshold for declining the build is not reached.
+	\item \textbf{CI/CD}: During development process, we test bleeding edge code in CI bots. Those run unit and integration tests. Additionally, \emph{SonarQube} is used in order to detect common coding mistakes or code smells. The developer decides whether to fix them or not, but also has to make sure that a certain threshold for declining the build is not reached.
 \end{itemize}
 
 \section{Design Constraints}
