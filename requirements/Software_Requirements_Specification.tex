@@ -43,7 +43,8 @@ Version 1.0
 		Date & Version & Description & Author\\
 		10/23/2019 & 0.1 & Added Use Case Diagram & Norman Gehrsitz \\
 		10/28/2019 & 0.2 & Added Activity Diagram for creating and configuring game server & Leonhard Gahr \\
-		10/xx/2019 & 1.0 & Complete current state of information & Kevin Reis \\
+		10/xx/2019 & 0.3 & Complete current state of information & Kevin Reis \\
+		06/29/2020 & 1.0 & Final release & Kevin Reis \\
 		% <mm/dd/yyyy> & <x.x> & <details> & <name>\\
 	\end{tabu}
 	\label{tab:rev-hist}
@@ -60,7 +61,7 @@ Version 1.0
 
 \section{Purpose}
 % [Specify the purpose of this SRS. The SRS should fully describe the external behavior of the application or subsystem identified. It also describes nonfunctional requirements, design constraints and other factors necessary to provide a complete and comprehensive description of the requirements for the software.]
-The purpose of this document is to give a general description of the GameBase project. It explains our vision and all features we plan to provide. It is supposed to offer insights into the system in terms of back- and frontend, the interfaces in both ends for communication and the constraints of the system.
+The purpose of this document is to give a general description of the \textbf{GameBase} project. It explains our vision and all features we plan to provide. It is supposed to offer insights into the system in terms of back- and frontend, the interfaces in both ends for communication and the constraints of the system.
 
 \section{Scope}
 % [A brief description of the software application that the SRS applies to; the feature or other subsystem grouping; what Use-Case model(s) it is associated with;  and anything else that is affected or influenced by this document.]
@@ -70,7 +71,7 @@ We want to offer our software to everyone who wants easy game server management 
 \subsection*{Components}
 This software is divided into two obvious components
 \begin{itemize}
-	\item Frontend (End-user server management)
+	\item Frontend (End user server management)
 	\item Backend (Deployment to specified destination, Docker Image creation)
 \end{itemize}
 
@@ -109,7 +110,7 @@ The next chapters provide information about our vision based on a use case diagr
 % \end{itemize}]
 Setting up game servers can be painful. Either way when hosting on a dedicated server, you need to get into e. g. Bash where things could get messy really fast if you don't have enough experience. And in case you want to get rid of your installed unsteady server, you also need to take care of removing all remaining files that sit somewhere in your file system. Good luck on that!
 
-With GameBase, we want to make your game server deployment life way easier. Using Docker – a state-of-the-art virtualisation technology – servers can be set up through templates on a website and ready to be deployed with just one click. This also makes sure that every game server is isolated from each other avoiding possible conflicts with each other as well.
+With GameBase, we want to make your game server deployment life way easier. Using Docker – a state-of-the-art virtualisation technology – to deploy containers to \gls{k8s} - a Docker orchestrator - servers can be set up through templates on a website and ready to be deployed with just one click. This also makes sure that every game server is isolated from each other avoiding possible conflicts with each other as well.
 
 \section{Product perspective}
 \begin{figure}
@@ -119,9 +120,9 @@ With GameBase, we want to make your game server deployment life way easier. Usin
 \end{figure}
 Players are featured in our diagram even though they are not interacting with our application directly because after all connecting to the servers is a crucial part of our system.
 
-Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently. As we want to offer an experience of settings up any kind of game servers.
+Administration of the game servers with game specific features like \emph{kicking}, \emph{banning} and \emph{map rotation} is out of scope. This is due to the variety of games and their systems that handle these actions independently as we want to offer an experience of settings up any kind of game servers.
 
-The main use case of our application is the easy management of game server containers created by Docker. We split up its functionality into two semester.
+The main use case of our application is the easy management of game server containers created by Docker and having them deployed automatically to \gls{k8s}. We split up its functionality into two semester.
 
 \chapter{Specific Requirements}
 % [This section of the SRS should contain all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements, and testers to test that the system satisfies those requirements.   When using use-case modeling, these requirements are captured in the Use-Cases and the applicable supplementary specifications.  If use-case modeling is not used, the outline for supplementary specifications may be inserted directly into this section, as shown below.]
@@ -131,13 +132,13 @@ The main use case of our application is the easy management of game server conta
 
 % Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a Docker image on the frontend side, and the backend takes care of it being deployed as a container.
+The backend's task is to orchestrate Docker container. The orchestration method depends on the selected deployment. It can either be native or a 3rd party provider like \gls{k8s} or \gls{aws}. The user can choose a game server template on the frontend side, and the backend takes care of it being deployed as a container.
 
 \subsection{Server Management and Creation (3rd semester)}
-Through the frontend the user should be able to create any kind of game server containers and manage them. The image can either be:
+Through the frontend the user should be able to create any kind of game server containers and manage them. The template can either be:
 \begin{itemize}
-	\item an already built one 
-	\item or be built by \emph{Dockerfile}.
+	\item an already pre-built one 
+	\item or a custom made \gls{k8s} definition.
 \end{itemize}
  
  
@@ -146,8 +147,8 @@ The functionality of management contains:
 	\item Start, stop and kill server
 	\item Create container
 	\item Configuring server (ports, player slots, RAM usage, ...)
-	\item Select deployment method
-	\item Recreating container (equals reinstallation)
+%	\item Select deployment method
+%	\item Recreating container (equals reinstallation)
 \end{itemize}
 
 \subsection{Status Reporting (4th semester)}
@@ -158,28 +159,29 @@ For better troubleshooting and further, concise information about a user's conta
 	\item Running
 	\item Stopping...
 	\item Stopped
+	\item Unknown
 \end{itemize}
 
-\subsection{Volume Management (4th semester)}
-The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
+% \subsection{Volume Management (4th semester)}
+% The client should be able to access server files inside a container via FTP/SFTP. This functionality can also include backup server files and make restoring accessible through the frontend.
 
 \subsection{User System (3rd + 4th semester)}
-At registration, the data provided by the user is stored in the backend. It is needed to log in, edit the profile and also provides the basis for a permission system. According use cases are:
+At registration, the data provided by the user is stored in the \gls{k8s} cluster. It is needed to log in, edit the profile and also provides the basis for a permission system. According use cases are:
 
 \begin{itemize}
 	\item Register
 	\item Log in
 	\item Log out
 	\item Change profile
-	\item Delete profile
+	%\item Delete profile
 \end{itemize}
 
-As of defined use case scopes, in the 3rd semester, we firstly stick to only one account with Basic authentication.
+As of defined use case scopes, in the 3rd semester, we firstly stick to only one account with Basic authentication. Later on, we implement a JWT Bearer authentication.
 
-\subsection{Preset Registry ((3rd +) 4th semester)}
-Searching Docker images can be a hassle for Docker-inexperienced users. This is why it makes sense to provide a preset registry not only for pre-built, but also for user-created images and Dockerfiles. This reduces effort of creating multiple servers with images that have been built in the past.
+\subsection{Template Parsing ((3rd +) 4th semester)}
+If the user chooses not to use a pre-built template, they can provide a custom made template as \gls{yaml}. After submitting their template, the backend parses it and feeds it with additional data that is required for \gls{k8s} deployment at the end. 
 
-The backend is needed to separate the user interface from the data storage. It verifies if the correct permissions are present to request data or to ensure that incoming data is properly parsed and saved correctly. For security reasons data is filtered by the backend. It is then packed in the right format which the next chapter describes. The data is kept inside a database and maintained by the backend.
+The backend is needed to separate the user interface from the actual interaction with the \gls{k8s} cluster. It manages user input before processing a user's adjusted request to the \gls{k8s} cluster.
 
 % \subsection{<Functional Requirement One>}
 % [The requirement description.]
@@ -187,10 +189,15 @@ The backend is needed to separate the user interface from the data storage. It v
 \subsection{Read and Parse Data Passed by API Endpoints}
 For the communication between both sides (frontend and backend) a universal data format is needed, therefore JSON is used. The frontend sends data in JSON to the backend in form of a request via an HTTP client and waits for a response from the backend which also answers with JSON.
 
-It's important to validate input and output data in order to avoid malfunctions or possible abuse of undetected bugs. In case of sharing \gls{dto} files we need to make sure that we have a centralized module which can be added as dependency by any component.
+It's important to validate input and output data in order to avoid malfunctions or possible abuse of undetected bugs. In order to provide a common \gls{dto} interface, we decide to use \textit{OpenAPI Specification}. It's used to define a REST interface in \gls{yaml} which the code generators for serversided and clientsided codes uses.
 
 \subsection{Provide Data}
-After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned DTO objects. In addition, the response contains a HTTP status code even if the request failed so that the frontend knows if it just received data or an error.
+After data is requested from the frontend and the user is allowed to do so, the backend sends out the previously mentioned \gls{dto} objects. If an error occurs during requests, then an exception \gls{dto} will be returned instead. It contains
+\begin{enumerate}
+	\item ID of affected container
+	\item Short code of exception
+	\item Detailed description of exception
+\end{enumerate} 
 
 \section{Functionality - Frontend}
 %[This section describes the functional requirements of the system for those requirements which are expressed in the natural language style. For many applications, this may constitute the bulk of the SRS Package and thought should be given to the organization of this section. This section is typically organized by feature, but alternative organization methods may also be appropriate, for example, organization by user or organization by subsystem.  Functional requirements may include feature sets, capabilities, and security.
