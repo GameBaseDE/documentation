@@ -206,25 +206,20 @@ After data is requested from the frontend and the user is allowed to do so, the 
 
 The frontend provides an user interface for the users to interact with and is able to request data from the data backend. The following subsections explain the types of data the frontend can request. Each of the subsections corresponds to one or more use cases.
 
-
-% \subsection{<Functional Requirement One>}
-% [The requirement description.]
-
-
-\subsection{Application Server}
-The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using sane default configurations. According use cases are:
+The user interface exposes several highly abstracted options for investigating and controlling containers to users through the app server system. Users should be able to deploy containers in very few steps (ideally a single click) which can be achieved by using same default configurations. According use cases are:
 
 \begin{itemize}
     \item Request deployment
     \item Cancel deployment
     \item View deployment/container status
-    \item View reports/logs/metrics
+%    \item View reports/logs/metrics
 \end{itemize}
 
 You can see some use cases here:
 \begin{itemize}
 	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCCreateGameServer.pdf}{Create Gameserver}
 	\item \href{https://gamebase.pages.gitlab.tandashi.de/documentation/UCConfigureGameServer.pdf}{Configure Gameserver}
+	% TODO
 \end{itemize}
 
 \section{Usability}
@@ -234,7 +229,7 @@ You can see some use cases here:
 % 	\item specify measurable task times for typical tasks or base the new system’s usability requirements on other systems that the users know and like
 % 	\item specify requirement to conform to common usability standards, such as IBM’s CUA standards Microsoft’s GUI standards]
 % \end{itemize}
-We will build the user interface intuitive, so that a new user does not necessarily need an explanation or in-depth training, even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users a comprehensive documentation should be provided to enable customized deployment scenarios.
+We will build the user interface intuitive, so that a new user does not necessarily need an explanation or in-depth training, even if our users don't know what containers are or how they work they should be able and comfortable with the deployment. For advanced users, when providing a custom \gls{k8s} template, they have to refer to \gls{k8s}'s documentation.
 
 
 \section{Reliability}
