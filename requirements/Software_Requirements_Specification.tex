@@ -326,7 +326,7 @@ Nebular takes care of themeing and adds some more miscellaneous modules to Angul
 To deploy our frontend, Angular provides an extra build command for production use. However, it generated static files that have to be served by a web server. We use \textbf{nginx} to do that. It enables redirects if needed too. \\
 
 % TODO: BACKEND -> Web server?? K8s???
-The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
+The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. \\
 
 For REST communication, we use \textit{OpenAPI Specification}. It's a \gls{yaml} file which specifies endpoints for RESTful web services and follows the \textit{OpenAPI Specification}. It establishes a shared layer of \gls{dto} without creating redudancy in frontend and backend code. After definition of a \gls{yaml} file
 \begin{itemize}
@@ -373,15 +373,12 @@ To make development efficient, we're using the following tools:
 	\item \textbf{In code documentation}: Relevant information for developer.
 \end{itemize}
 
-\gls{stc}
-
 \section{Purchased Components}
 % [This section describes any purchased components to be used with the system, any applicable licensing or usage restrictions, and any associated compatibility and interoperability or interface standards.]
 \gls{na}
 
 \section{Interfaces}
 % [This section defines the interfaces that must be supported by the application. It should contain adequate specificity, protocols, ports and logical addresses, etc. so that the software can be developed and verified against the interface requirements.]
-Interfaces for production release are \gls{tbd}.
 
 \subsection{User Interfaces}
 % [Describe the user interfaces that are to be implemented by the software.]
@@ -390,10 +387,10 @@ To ensure that the user can interact with our system, we need to implement (at l
 	\item Angular web frontend
 	\item Creation and control of containers
 	\item Container status reporting
-	\item Creation of custom images
-	\item Attachment to container console
-	\item Server files management
-	\item Deployment method selection
+	\item Creation of custom templates
+	% \item Attachment to container console
+	% \item Server files management
+	% \item Deployment method selection
 	\item User management system
 	\item Update reminder
 \end{itemize}
@@ -403,24 +400,16 @@ To ensure that the user can interact with our system, we need to implement (at l
 We cannot make precise interface requirements for our software. The reason for this is that we want to develop our software that functions as a distributed environment.
 \begin{itemize}
 	\item \textbf{OS}: Should be supported by any OS that fulfill \href{https://www.docker.com/}{requirements of using Docker}.
-	\item \textbf{Orchestration systems/providers}: Local backend, \gls{k8s}, \gls{aws}, \gls{gcs}
+	\item \textbf{Orchestration systems/providers}: \gls{k8s}, \gls{aws}, \gls{gcs}
 \end{itemize}
-\gls{tbd}
 
 \subsection{Software Interfaces}
 % [This section describes software interfaces to other components of the software system. These may be purchased components, components reused from another application or components being developed for subsystems outside of the scope of this SRS but with which this software application must interact.]
-A huge requirement/major dependency is access to host system's Docker. This can be resolved with either:
-\begin{itemize}
-	\item Docker Socket (For Linux: unix:///var/run/docker.sock)
-	\item Docker-in-docker* (Requires privileged container environment)
-\end{itemize}
-\gls{tbd}
+A huge requirement/major dependency is access to host system's or user's provider's \gls{k8s} cluster. This is solved by passing a \textit{kubeconfig} file to the backend's container as volume bind in Docker.
 
-\subsection{Communications Interfaces}
+\subsection{Communication Interfaces}
 % [Describe any communications interfaces to other systems or devices such as local area networks, remote serial devices, etc.]
-This depends on the decision of which Docker socket to use stated in the section above.
-If \textit{Docker Socket} is used, at least one \textit{Docker network} must be shared among all containers in order to enable status reporting to GameBase. \\
-\gls{tbd}
+This depends on the \textit{kubeconfig}. It requires efficient permission in its specified \gls{k8s} for e. g. accessing namespaces or allow appliance of \gls{yaml} files defined by \gls{k8s}.
 
 \section{Licensing Requirements}
 % [Defines any licensing enforcement requirements or other usage restriction requirements that are to be exhibited by the software.]
