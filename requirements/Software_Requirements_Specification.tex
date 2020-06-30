@@ -321,11 +321,19 @@ We want to develop quality software. As a measurement, unit/integration tests an
 % [This section should indicate any design constraints on the system being built. Design constraints represent design decisions that have been mandated and must be adhered to.  Examples include software languages, software process requirements, prescribed use of developmental tools, architectural and design constraints, purchased components, class libraries, etc.]
 
 \subsection{Usage of Software Languages and Frameworks}
-For the frontend we will mainly use Angular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It updates content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and reuse them all over the application. An example component could be a login form, a profile card or dashboard widgets. Aside from that, if we need any kind of \gls{dto}s that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple \gls{dto}s into TypeScript classes. \\
+For the frontend we will use Angular and Nebular. Angular is one of popular frameworks that allows you to write modular websites in TypeScript. It updates content of a site dynamically which doesn't necessarily require refreshing the page. One can also develop single components and reuse them all over the application. An example component could be a login form, a profile card or dashboard widgets. Aside from that, if we need any kind of \gls{dto}s that have to be used in frontend but are dependent on backend, there are libraries available that enables converting simple \gls{dto}s into TypeScript classes. Besides of creating components, services can be created which handle e. g. REST requests or guards which can be used as an interceptor in Angular Routing.
+Nebular takes care of themeing and adds some more miscellaneous modules to Angular, such as an auth module that takes care of session handling. This allows a simple implementation of user login, logout and registration on the frontend side. 
+To deploy our frontend, Angular provides an extra build command for production use. However, it generated static files that have to be served by a web server. We use \textbf{nginx} to do that. It enables redirects if needed too. \\
 
-The application server will be built as a Spring Boot application in Kotlin. Spring Boot is built on top of the Spring framework and provides the developer with helpful features to create and run web applications. It offers Dependency Injections with so-called beans which makes sure that unnecessary objects will be created and existing objects will be reused over time. There are different approaches in defining these beans. We will probably stick to the way of defining them in configuration classes. They look simple and are a good method to provide an overview of all required beans. Spring's REST Web Service which represents the interface between our front- and backend will be used as well. Due to Spring Boot's embedded Tomcat instance deploying our application is very easy. It is run upon start of built .jar file thus no Tomcat Server has to be set up. That allows us deploying it in Docker too. \\
-
+% TODO: BACKEND -> Web server?? K8s???
 The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction.
+
+For REST communication, we use \textit{OpenAPI Specification}. It's a \gls{yaml} file which specifies endpoints for RESTful web services and follows the \textit{OpenAPI Specification}. It establishes a shared layer of \gls{dto} without creating redudancy in frontend and backend code. After definition of a \gls{yaml} file
+\begin{itemize}
+	\item \textit{ng-openapi-gen} for Angular frontend
+	\item \textit{OpenAPI Generator} for Go backend
+\end{itemize}
+for server and client code. 
 
 \subsection{Development Tools and Libraries}
 To make development efficient, we're using the following tools:
@@ -335,7 +343,7 @@ To make development efficient, we're using the following tools:
 	\item \textbf{Git}: Version control system
 	\item \textbf{GitLab}: Version control remote server
     \item \textbf{YouTrack}: Project planning tool with time tracking.
-	\item \textbf{TeamCity}: Continuous integration service	
+	\item \textbf{GitLab CI}: Continuous integration service	
 \end{itemize}
 
 \subsection*{Frontend}
@@ -348,23 +356,21 @@ To make development efficient, we're using the following tools:
 
 \subsection*{Backend}
 \begin{itemize}
-	\item \textbf{JetBrains IntelliJ}: Spring backend development
 	\item \textbf{JetBrains GoLand}: GoLang backend development
-	\item \textbf{Gradle}: Build management
+	\item \textbf{\gls{k8s} official Go library}: Interaction with \gls{k8s} clusters
 \end{itemize}
 
 \subsection*{Code Quality}
 \begin{itemize}
-	\item \textbf{IDE Formatter}: Appopriate formatting for compliance of coding guidelines. (\textit{Note}: Usage of formatter might not always apply.)
-	\item \textbf{CheckStyle}: Code style check before commiting
-	\item \textbf{FindBugs}: Analyse common Java/Kotlin bugs 
-	(\textit{Note}: Usage of plugin is subject to change.)
+	\item \textbf{Editorconfig}: Appopriate formatting for compliance of coding guidelines. (\textit{Note}: Usage of formatter might not always apply.)
+	\item \textbf{TSLint}: TypeScript linting for usual TS coding guidelines compliance.
+	\item \textbf{SonarQube}: Code Quality check on both frontend and backend
 \end{itemize}
 
 \section{Online User Documentation and Help System Requirements}
 \begin{itemize}
-	\item \textbf{JavaDoc}: Official documentation of Java/Kotlin code
 	\item \textbf{Swagger}: Automatic documentation creation for REST APIs
+	\item \textbf{In code documentation}: Relevant information for developer.
 \end{itemize}
 
 \gls{stc}
