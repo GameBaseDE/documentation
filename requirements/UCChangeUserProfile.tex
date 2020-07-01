@@ -36,7 +36,7 @@
 % \\
 % For <Subsystem or Feature>
         \bigbreak
-        Version 1.0
+        Version 1.1
     \end{flushright}
 
     \tableofcontents
@@ -61,10 +61,25 @@
         \item User is shown an error/success message
     \end{itemize}
 
-    \section{.feature File}
-    \gls{na}
+    \section{.feature file}
+    \begin{minipage}{\textwidth}
+    \lstinputlisting[language=Gherkin]{features/changeUserProfile.feature}
+    \end{minipage}
 
     \section{Imagery}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{diagramms/UCChangeUserProfileMockup.png}
+        \caption{Mockup of 'change user profile' page}
+        \label{fig:mockup}
+    \end{figure}
+    When accessing the \enquote{Change user profile} page, the user can either
+    \begin{itemize}
+        \item Change their username
+        \item Change their e-mail address
+        \item Change their password
+        \item Change their Gravatar e-mail address
+    \end{itemize}
+    Changing the password requires the old password once and the new password to be put in twice.
     \begin{figure}[H]
         \includegraphics[width=0.9\textwidth]{diagramms/UCChangeUserProfileScreenshot.png}
         \caption{Activity Screenshot}
