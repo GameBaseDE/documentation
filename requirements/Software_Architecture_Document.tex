@@ -86,23 +86,29 @@ The next chapters provide information from different perspectives about the syst
 
 \chapter{Architectural Representation}
 % [This section describes what software architecture is for the current system, and how it is represented. Of the Use-Case, Logical, Process, Deployment, and Implementation Views, it enumerates the views that are necessary, and for each view, explains what types of model elements it contains.]
-Our architecture uses the classical MVC Pattern for the Angluar Frontend as well as the Go backend. To reduce the implementation effort of a sharing the Model(representation of the Kubernetes Data) we use swagger.io.
-This is a visual example of our overall Model:
-%PNG
+%Our architecture uses the classical MVC Pattern for the Angluar Frontend as well as the Go backend. To reduce the implementation effort of a sharing the Model(representation of the Kubernetes Data) we use swagger.io.
+%This is a visual example of our overall Model:
+Our architectures use the following design patterns:
+\begin{itemize}
+	\item Backend: \gls{mvc}
+	\item Frontend: A mix of \gls{mvc} and \gls{mvvm}
+\end{itemize}
+To provide an easy maintainable shared \gls{dto} of objects to be used in REST requests, we use \textit{OpenAPI Specification}. In addition, the backend uses \gls{k8s} for user management and game server deployments.
+%TODO PNG ????
 
 
 \chapter{Architectural Goals and Constraints}
 % [This section describes the software requirements and objectives that have some significant impact on the architecture; for example, safety, security, privacy, use of an off-the-shelf product, portability, distribution, and reuse. It also captures the special constraints that may apply: design and implementation strategy, development tools, team structure, schedule, legacy code, and so on.]
-By using a MVC architecture for both the Front- and Backend we gain various benefits, like productivity improvements by auto-generating the Code for our Model implementation in Go and Angular.
-\subsection{Frontend}
-Since our Frontend is writtien in Angular it internally also features a MVC Architecture.
+By using a \gls{mvc} architecture for both the front- and backend we gain various benefits, like productivity improvements by auto-generating the code for our model implementation in Go and Angular.
+\section{Frontend}
+For Angular, its design pattern is not strictly set. It is said that it applies \gls{mvc} pattern, but also something of \gls{mvvm} pattern. For this section, we stick to the \gls{mvc} pattern.
 \begin{itemize}
-	\item Model: kubernetes data classes auto-gernerated by swagger
-	\item View: HTML+CSS in the Browser
-	\item Controller: Generated Javascript
+	\item Model: \gls{dto} defined in \textit{OpenAPI Specfication} file
+	\item View: HTML + CSS in the browser
+	\item Controller: Handles incoming interaction of view, updates details if needed and partially validates user input to be sent to the backend
 \end{itemize}
-\subsection{Backend}
-Our Go Backend also leverages the advantages of a MVC design.
+\section{Backend}
+Our Go Backend also leverages the advantages of a \gls{mvc} design.
 \begin{itemize}
 	\item Model: kubernetes data classes auto-gernerated by swagger
 	\item View: not applicable since we are only offfering a REST API
