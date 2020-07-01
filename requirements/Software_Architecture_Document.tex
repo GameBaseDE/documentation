@@ -93,7 +93,7 @@ Our architectures use the following design patterns:
 	\item Backend: \gls{mvc}
 	\item Frontend: A mix of \gls{mvc} and \gls{mvvm}
 \end{itemize}
-To provide an easy maintainable shared \gls{dto} of objects to be used in REST requests, we use \textit{OpenAPI Specification}. In addition, the backend uses \gls{k8s} for user management and game server deployments.
+To provide an easy maintainable shared \gls{dto} of objects to be used in \gls{rest} requests, we use \textit{OpenAPI Specification}. In addition, the backend uses \gls{k8s} for user management and game server deployments.
 %TODO PNG ????
 
 
@@ -110,9 +110,9 @@ For Angular, its design pattern is not strictly set. It is said that it applies 
 \section{Backend}
 Our Go Backend also leverages the advantages of a \gls{mvc} design.
 \begin{itemize}
-	\item Model: kubernetes data classes auto-gernerated by swagger
-	\item View: not applicable since we are only offfering a REST API
-	\item Controller: gin HTTP Request Controller and kubernetes access logic
+	\item Model: \gls{dto} defined in \textit{OpenAPI Specification} file
+	\item View: JSON responses
+	\item Controller: gin HTTP Request Controller and \gls{k8s} access logic
 \end{itemize}
 \chapter{Use-Case View}
 % [This section lists use cases or scenarios from the use-case model if they represent some significant, central functionality of the final system, or if they have a large architectural coverage—they exercise many architectural elements or if they stress or illustrate a specific, delicate point of the architecture.]
@@ -122,9 +122,57 @@ This is the \gls{ucd} of our project:
 	\label{fig:ucd}
 \end{figure}
 
-%\section{Use-Case Realizations}
+\section{Use-Case Realizations}
 % [This section illustrates how the software actually works by giving a few selected use-case (or scenario) realizations, and explains how the various design model elements contribute to their functionality.]
-%\gls{na}
+This section describes an exmplary realization of the use-case \textit{List Servers}.
+\subsection{Requirements}
+\begin{itemize}
+	\item A \gls{rest} endpoint which returns an array of game servers that are available to the server
+	\item A \gls{dto} which represents one server
+	\item A list on the frontend to display the results
+	\item Check authentication of user
+	\begin{itemize}
+		\item If they are logged in, they can see the list.
+		\item Or else the frontend redirects them to the login screen.
+	\end{itemize}
+\end{itemize}
+\subsection{Realization}
+\subsubsection{OpenAPI Specification}
+This step is necessary as it's required to define an \gls{rest} endpoint for data transfer. Inside of the \gls{yaml} file, we can specify endpoints with their authentication header, request path, request method and responses at ease.
+In addition, responses can have references to so called \textit{schemes} which describes a response in general. Both \gls{rest} client and server ship these as possible \gls{dto}s.
+Afterwards, both frontend and backend can generate client and server respectively by using the update \gls{yaml} file.
+\subsubsection{Frontend}
+\paragraph{View}
+This use-case uses the \textit{Dashboard} view. \textit{Nebular}'s accordion components consists of two view components: Header and Body. The header can be used as a very concise description of a game server, including:
+\begin{itemize}
+	\item Server ID
+	\item Server name
+	\item Server status
+	\item Control panel for restart, stop, start and settings actions
+\end{itemize}
+The body contains detailed information about a game server:
+\begin{itemize}
+	\item Server description
+	\item Template path
+	\item Port allocation
+	\item Memory allocation
+	\item Restart behavior
+	\item Startup arguments
+	\item Button \enquote{\textit{Delete container}}
+\end{itemize}
+Each individual accordion item are added to an accordion list.
+
+\paragraph{Controller}
+It handles \gls{rest} requests for
+\begin{itemize}
+	\item Fetching game server details
+	\item Starting, stopping and restartin game servers
+\end{itemize}
+If the user chooses to access the server settings, the corresponding handler function set for a button in the view is triggered, redirecting the user to the settings page.
+However, when it comes to checking authentication, the controller for this \textit{Dashboard} component has no effect on it whatsoever. The route to the \textit{Dashboard} is added to Angular Routing. In Angular Routing, routes can be a child entry of a so-called \textit{guard}. A \textit{guard} represents e. g. an interceptor. In this case, an HTTP interceptor exists which checks if the user is authenticated or not before proceeding to the page.
+
+\subsubsection{Backend}
+% TODO @ Backend!
 
 \chapter{Logical View}
 % [This section describes the architecturally significant parts of the design model, such as its decomposition into subsystems and packages. And for each significant package, its decomposition into classes and class utilities. You should introduce architecturally significant classes and describe their responsibilities, as well as a few very important relationships, operations, and attributes.]
