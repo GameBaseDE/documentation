@@ -173,6 +173,15 @@ However, when it comes to checking authentication, the controller for this \text
 
 \subsubsection{Backend}
 % TODO @ Backend!
+As we use the Gin server framework for our backend, incoming requests are dispatched to their request handlers by an automatically generated server. The initial request handler initiates the sequential processing of the request through specialized handlers. Each handler does only one thing, passing any remaing work to the next handler.
+
+There are three request handlers:
+\begin{itemize}
+	\item The initial request handler creates the chain of request handlers following the Chain of Command design pattern
+	\item The "authentication" request handler checks if the request correctly authorized
+	\item The "parser" request handler parses request data
+	\item The "kubernetes controller" request handler queries the kubernetes cluster to fulfill the request 
+\end{itemize}
 
 \chapter{Logical View}
 % [This section describes the architecturally significant parts of the design model, such as its decomposition into subsystems and packages. And for each significant package, its decomposition into classes and class utilities. You should introduce architecturally significant classes and describe their responsibilities, as well as a few very important relationships, operations, and attributes.]
