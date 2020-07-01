@@ -208,13 +208,13 @@ We were unable to clearly separate the different components into distinct direct
 
 The separation into different components is thus only logical in nature.
 \texttt{main.go} is the main entry point of the backend application. It starts the server and prepares it for accepting incoming requests. \\
-The files \texttt{openapi/routers.go} is automatically generated and dispatches to the automatically generated request handler functions in \texttt{openapi/api_*} \\
-The files \texttt{openapi/api_*.go} contain the automatically generated request handler functions. These solely forward requests to our request handling pipeline. \\
-The files \texttt{openapi/model_*.go} contain the automatically generated models which are used as request or response messages. \\
-The files \texttt{openapi/kubernetes_*.go} contain Kubernetes specific functionality. They serve as an abstraction layer over the Kubernetes API and help reduce the complexity of our request handlers. \\
+The files \texttt{openapi/routers.go} is automatically generated and dispatches to the automatically generated request handler functions in \texttt{openapi/api\_*.go} \\
+The files \texttt{openapi/api\_*.go} contain the automatically generated request handler functions. These solely forward requests to our request handling pipeline. \\
+The files \texttt{openapi/model\_*.go} contain the automatically generated models which are used as request or response messages. \\
+The files \texttt{openapi/kubernetes\_*.go} contain Kubernetes specific functionality. They serve as an abstraction layer over the Kubernetes API and help reduce the complexity of our request handlers. \\
 The files \texttt{openapi/gameserver*.go} are a higher-level abstraction over the Kubernetes API specialized to maintain game servers in a Kubernetes cluster.  \\
 The files \texttt{openapi/authentication*.go} provides helper functions for user authentication. \texttt{openapi/user.go} provides an additional model for this purpose. \\
-The files \texttt{openapi/http_request*.go} are the stages in our request handling process. Each of these files contains a request handler. They are loosely coupled to each other and tightly coupled to our abstractions over the Kubernetes API and the authentication helpers. \\
+The files \texttt{openapi/http\_request*.go} are the stages in our request handling process. Each of these files contains a request handler. They are loosely coupled to each other and tightly coupled to our abstractions over the Kubernetes API and the authentication helpers.
 
 \chapter{Process View}
 % [This section describes the system's decomposition into lightweight processes (single threads of control) and heavyweight processes (groupings of lightweight processes). Organize the section by groups of processes that communicate or interact. Describe the main modes of communication between processes, such as message passing, interrupts, and rendezvous.]
