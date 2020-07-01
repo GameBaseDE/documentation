@@ -226,12 +226,29 @@ This is our deployment view including the Kubernetes cluster which is being acce
 
 \chapter{Size and Performance}
 % [A description of the major dimensioning characteristics of the software that impact the architecture, as well as the target performance constraints.]
-Our Software acts as a Middleman between the Users Frontend and a Kubernetes Cluster. As such performance mainly depends on the Kubernetes Cluster where Containers are deployed to. Furthermore Go is a well optimized and multitasking oriented language. So even having multiple users send configuration requests to our backend should be no concern regarding performance.
+Our software acts as a middleman between the users frontend and a \gls{k8s} cluster. As such performance mainly depends on the \gls{k8s} cluster where containers are deployed to. Furthermore, Go is a well optimized and multitasking oriented language. So even having multiple users send configuration requests to our backend should be no concern regarding performance.
 
 \chapter{Quality}
 % [A description of how the software architecture contributes to all capabilities (other than functionality) of the system: extensibility, reliability, portability, and so on. If these characteristics have special significance, such as safety, security or privacy implications, they must be clearly delineated.]
+We use \textit{GitLab} both as Git repository remote and CI/CD. The CI is triggered if the following conditions are fulfilled:
+\begin{itemize}
+	\item Push to \texttt{dev} or other branches
+	\item Tag release after branching off from \texttt{master} branch
+\end{itemize}
 
-\gls{tbd}
+Each pipeline goes through the processes:
+\begin{itemize}
+	\item Install dependencies and push dependencies as cache to S3 bucket (frontend)
+	\item Generate Swagger (\textit{OpenAPI}) client
+	\item Verify tests (E2E, Karma, TSLint)
+	\item Build \texttt{dev}/\texttt{release}
+	\item Check code with \textit{SonarQube Scanner}
+	\item Create and publish Docker image
+	\item Deploy software
+\end{itemize}
+Every pipeline can be accessed in either frontend's or backend's project.
+
+To prevent code smells or common bugs, we introduced the usage of \textit{SonarQube} whose scanner is always run in CI pipelines.
 
 \chapter{Supporting Information}
 % [The supporting information makes the SRS easier to use.  It includes:
