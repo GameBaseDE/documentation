@@ -326,7 +326,7 @@ Nebular takes care of themeing and adds some more miscellaneous modules to Angul
 To deploy our frontend, Angular provides an extra build command for production use. However, it generated static files that have to be served by a web server. We use \textbf{nginx} to do that. It enables redirects if needed too. \\
 
 % TODO: BACKEND -> Web server?? K8s???
-The container server in the backend will use the Docker SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. \\
+The container server in the backend will use the \gls{k8s} SDK which is available in \emph{Go}. \emph{Go} claims to make it easy to build simple, reliable, and efficient software. Its concurrency mechanisms make it easy to write programs that get the most out of multicore and networked machines, while its novel type system enables flexible and modular program construction. For the realization of a RESTful web service, we use Gin. It's also used by the generated code of \textit{OpenAPI Generator}. \\
 
 For REST communication, we use \textit{OpenAPI Specification}. It's a \gls{yaml} file which specifies endpoints for RESTful web services and follows the \textit{OpenAPI Specification}. It establishes a shared layer of \gls{dto} without creating redudancy in frontend and backend code. After definition of a \gls{yaml} file
 \begin{itemize}
@@ -392,7 +392,12 @@ To ensure that the user can interact with our system, we need to implement (at l
 	% \item Server files management
 	% \item Deployment method selection
 	\item User management system
-	\item Update reminder
+	\begin{itemize}
+		\item Change profile details
+		\item Register, log in, log out
+		\item Set server owner
+	\end{itemize}
+	% \item Update reminder
 \end{itemize}
 
 \subsection{Hardware Interfaces}

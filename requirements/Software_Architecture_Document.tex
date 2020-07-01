@@ -178,9 +178,9 @@ As we use the Gin server framework for our backend, incoming requests are dispat
 There are four request handlers:
 \begin{itemize}
 	\item The initial request handler creates the chain of request handlers following the Chain of Command design pattern
-	\item The "authentication" request handler checks if the request correctly authorized
-	\item The "parser" request handler parses request data
-	\item The "kubernetes controller" request handler queries the kubernetes cluster to fulfill the request 
+	\item The \enquote{authentication} request handler checks if the request correctly authorized
+	\item The \enquote{parser} request handler parses request data
+	\item The \enquote{\gls{k8s} controller} request handler queries the kubernetes cluster to fulfill the request 
 \end{itemize}
 
 \chapter{Logical View}
