@@ -74,11 +74,11 @@ The use case describes the configuration of gameservers
     \caption{Mockup of the game server configuration page (previously: game server creation wizard)}
     \label{fig:mockup}
 \end{figure}
-The configuration page is separated into two parts: General Details and Resource Allocation \& Container Settings.
+The configuration page is made up of two parts: General Details and Resource Allocation \& Container Settings.
 
-In General Details, the user sets a server name, the owner and a short description which will be displayed later on the user's dashboard. When typing in some letters in the server owner field, a suggestion box will popup which the user can use in order to set the desired server owner.
+In General Details, the user sets a server name and a short description which will be displayed later on the user's dashboard.
 
-In Resource Allocation \& Container Settings, the user will be asked to select the type (game) of the game server in form of a Docker image. In addition, the user must allocate ports and memory for the game server. This is especially required when e. g. creating a Minecraft server. If any additional startup arguments are needed, the user can set them in the box "Startup Arguments". As a last option, the user can choose how the restart behaviour of the container should be.
+In Resource Allocation \& Container Settings, the user will be asked to select the type (game) of the game server in form of a template with predefined Docker image. In addition, the user can allocate ports and memory for the game server if he chooses to change the standards. This is relevant when e. g. updating the ports used by a gameserver internally. If any additional startup arguments are needed, the user can set them in the box "Startup Arguments". As a last option, the user can choose how the restart behaviour of the container should be.
 
 \chapter{Special Requirements}
 
@@ -93,7 +93,7 @@ The user needs the permissions to update that gameserver.
 The user must be logged in to edit a server.
 
 \section{Must be owner or permitted to update the server}
-The user must own that gameserver or has the permissions to configure the gameserver, given by the owner of that server.
+The user must own that gameserver or has the permissions to configure the gameserver
 
 \section{User navigated on the gameserver details page}
 The user must have navigated on the gameservers details page of the gameserver he wants to edit.
